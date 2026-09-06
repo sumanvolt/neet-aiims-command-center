@@ -6,7 +6,7 @@ import { Check, Flame, Smartphone, Footprints, BookOpen, ChevronLeft, ChevronRig
 export interface DailyLog {
   date: string;
   studyHours: number;
-  phoneUnderLimit: boolean;
+  phoneHours: number; // Granular screen time in hours
   walkDone: boolean;
 }
 
@@ -17,7 +17,7 @@ export default function DailyTracker() {
   const todayStr = new Date().toISOString().slice(0, 10);
 
   useEffect(() => {
-    const saved = localStorage.getItem("shekhu_daily_logs_v2");
+    const saved = localStorage.getItem("shekhu_daily_logs_v3");
     if (saved) {
       try { setLogs(JSON.parse(saved)); } catch (e) {}
     }
@@ -25,13 +25,13 @@ export default function DailyTracker() {
 
   const saveLogs = (updated: Record<string, DailyLog>) => {
     setLogs(updated);
-    localStorage.setItem("shekhu_daily_logs_v2", JSON.stringify(updated));
+    localStorage.setItem("shekhu_daily_logs_v3", JSON.stringify(updated));
   };
 
   const currentLog = logs[todayStr] || {
     date: todayStr,
     studyHours: 0,
-    phoneUnderLimit: false,
+    phoneHours: 0,
     walkDone: false,
   };
 
@@ -43,7 +43,6 @@ export default function DailyTracker() {
     saveLogs(updated);
   };
 
-  // Month navigation calculation
   const year = currentMonthDate.getFullYear();
   const month = currentMonthDate.getMonth();
   const monthName = currentMonthDate.toLocaleString("default", { month: "long" });
@@ -59,10 +58,10 @@ export default function DailyTracker() {
   const nextMonth = () => setCurrentMonthDate(new Date(year, month + 1, 1));
   const prevMonth = () => setCurrentMonthDate(new Date(year, month - 1, 1));
 
-  // Current Month Completed Days
+  // Current Month Completed Days (Study >= 6h, Phone <= 2h, Walk Done)
   const monthCompletedCount = monthDays.filter((d) => {
     const entry = logs[d];
-    return entry && entry.studyHours >= 6 && entry.phoneUnderLimit && entry.walkDone;
+    return entry && entry.studyHours >= 6 && entry.phoneHours <= 2 && entry.walkDone;
   }).length;
   const monthPercentage = Math.round((monthCompletedCount / totalDaysInMonth) * 100);
 
@@ -79,59 +78,68 @@ export default function DailyTracker() {
           </div>
           <div className="bg-[#eeeffd] border-2 border-[#122056] px-3 py-1 text-xs font-black shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 text-[#122056]">
             <Flame className="w-4 h-4 text-[#ff4757] fill-[#ff4757]" />
-            MONTHLY PERFECT DAYS: {monthCompletedCount}/{totalDaysInMonth} ({monthPercentage}%)
+            PERFECT DAYS: {monthCompletedCount}/{totalDaysInMonth} ({monthPercentage}%)
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Habit 1: Study Hours */}
           <div className="border-2 border-[#122056] p-4 bg-[#eeeffd] shadow-[2px_2px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-black text-[#122056] flex items-center gap-1.5">
                 <BookOpen className="w-4 h-4 text-[#5b65dc]" /> 6H+ DEEP STUDY
               </span>
               <span className={`text-[10px] font-black px-1.5 py-0.5 border border-[#122056] ${currentLog.studyHours >= 6 ? 'bg-[#10b981] text-white' : 'bg-white text-[#122056]'}`}>
-                {currentLog.studyHours >= 6 ? "ACHIEVED" : "PENDING"}
+                {currentLog.studyHours >= 6 ? "ACHIEVED" : "IN PROGRESS"}
               </span>
             </div>
             <div className="flex items-center justify-center gap-3 my-2">
               <button
-                onClick={() => updateToday({ studyHours: Math.max(0, currentLog.studyHours - 0.5) })}
+                onClick={() => updateToday({ studyHours: Math.max(0, parseFloat((currentLog.studyHours - 0.5).toFixed(1))) })}
                 className="w-8 h-8 font-black text-base border-2 border-[#122056] bg-white hover:bg-[#fafafd] shadow-[2px_2px_0px_0px_#122056]"
               >
                 -
               </button>
               <span className="text-2xl font-black font-mono text-[#122056]">{currentLog.studyHours}h</span>
               <button
-                onClick={() => updateToday({ studyHours: currentLog.studyHours + 0.5 })}
+                onClick={() => updateToday({ studyHours: parseFloat((currentLog.studyHours + 0.5).toFixed(1)) })}
                 className="w-8 h-8 font-black text-base border-2 border-[#122056] bg-white hover:bg-[#fafafd] shadow-[2px_2px_0px_0px_#122056]"
               >
                 +
               </button>
             </div>
-            <p className="text-[10px] text-center font-bold text-slate-500">NCERT + Question Practice</p>
+            <p className="text-[10px] text-center font-bold text-slate-500">Target: Minimum 6.0 Hours</p>
           </div>
 
+          {/* Habit 2: Screen Time with Plus / Minus */}
           <div className="border-2 border-[#122056] p-4 bg-[#eeeffd] shadow-[2px_2px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-black text-[#122056] flex items-center gap-1.5">
-                <Smartphone className="w-4 h-4 text-[#ff4757]" /> PHONE &lt; 2H LIMIT
+                <Smartphone className="w-4 h-4 text-[#ff4757]" /> PHONE TIME (&le; 2.0H)
               </span>
-              <span className={`text-[10px] font-black px-1.5 py-0.5 border border-[#122056] ${currentLog.phoneUnderLimit ? 'bg-[#10b981] text-white' : 'bg-white text-[#122056]'}`}>
-                {currentLog.phoneUnderLimit ? "LOCKED" : "PENDING"}
+              <span className={`text-[10px] font-black px-1.5 py-0.5 border border-[#122056] ${currentLog.phoneHours <= 2 ? 'bg-[#10b981] text-white' : 'bg-[#ff4757] text-white'}`}>
+                {currentLog.phoneHours <= 2 ? "CONTROLLED" : "EXCEEDED"}
               </span>
             </div>
-            <button
-              onClick={() => updateToday({ phoneUnderLimit: !currentLog.phoneUnderLimit })}
-              className={`w-full py-2.5 border-2 border-[#122056] text-xs font-black shadow-[2px_2px_0px_0px_#122056] transition-all flex items-center justify-center gap-2 ${
-                currentLog.phoneUnderLimit ? 'bg-[#10b981] text-white' : 'bg-white hover:bg-[#fafafd] text-[#122056]'
-              }`}
-            >
-              <Check className="w-4 h-4" />
-              {currentLog.phoneUnderLimit ? "SCREEN TIME CONTROLLED" : "MARK PHONE &lt; 2H"}
-            </button>
-            <p className="text-[10px] text-center font-bold text-slate-500 mt-2">Zero shorts / mindless reels</p>
+            <div className="flex items-center justify-center gap-3 my-2">
+              <button
+                onClick={() => updateToday({ phoneHours: Math.max(0, parseFloat((currentLog.phoneHours - 0.25).toFixed(2))) })}
+                className="w-8 h-8 font-black text-base border-2 border-[#122056] bg-white hover:bg-[#fafafd] shadow-[2px_2px_0px_0px_#122056]"
+              >
+                -
+              </button>
+              <span className="text-2xl font-black font-mono text-[#122056]">{currentLog.phoneHours}h</span>
+              <button
+                onClick={() => updateToday({ phoneHours: parseFloat((currentLog.phoneHours + 0.25).toFixed(2)) })}
+                className="w-8 h-8 font-black text-base border-2 border-[#122056] bg-white hover:bg-[#fafafd] shadow-[2px_2px_0px_0px_#122056]"
+              >
+                +
+              </button>
+            </div>
+            <p className="text-[10px] text-center font-bold text-slate-500">Adjust in 15-min intervals</p>
           </div>
 
+          {/* Habit 3: Non-negotiable 30m Walk */}
           <div className="border-2 border-[#122056] p-4 bg-[#eeeffd] shadow-[2px_2px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-black text-[#122056] flex items-center gap-1.5">
@@ -186,7 +194,7 @@ export default function DailyTracker() {
           {monthDays.map((d) => {
             const entry = logs[d];
             const studyPass = entry && entry.studyHours >= 6;
-            const phonePass = entry && entry.phoneUnderLimit;
+            const phonePass = entry && entry.phoneHours <= 2;
             const walkPass = entry && entry.walkDone;
             const isFullSuccess = studyPass && phonePass && walkPass;
             const isPartial = entry && (studyPass || phonePass || walkPass);
@@ -215,7 +223,7 @@ export default function DailyTracker() {
                   </div>
                   <div className="flex justify-between">
                     <span>Phone:</span>
-                    <span>{entry?.phoneUnderLimit ? "<2h ✓" : "✗"}</span>
+                    <span>{entry ? `${entry.phoneHours}h` : "0h"}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Walk:</span>

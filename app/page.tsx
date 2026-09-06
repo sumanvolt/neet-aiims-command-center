@@ -17,10 +17,10 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 1: Diversity in Living World",
         weightage: "~28-32 Marks",
         subtopics: [
-          { id: "b1-1", name: "What is living? Biodiversity, Need for classification, Taxonomy & Systematics", is8020: false, status: 0, ncertDone: false },
-          { id: "b1-2", name: "Five Kingdom System: Monera, Protista, Fungi; Lichens, Viruses, Viroids", is8020: true, status: 0, ncertDone: false },
-          { id: "b1-3", name: "Plant Kingdom: Algae, Bryophytes, Pteridophytes, Gymnosperms", is8020: true, status: 0, ncertDone: false },
-          { id: "b1-4", name: "Animal Kingdom: Non-chordata up to phyla, chordata up to classes", is8020: true, status: 0, ncertDone: false },
+          { id: "b1-1", name: "What is living? Biodiversity, Need for classification, Taxonomy & Systematics", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "b1-2", name: "Five Kingdom System: Monera, Protista, Fungi; Lichens, Viruses, Viroids", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b1-3", name: "Plant Kingdom: Algae, Bryophytes, Pteridophytes, Gymnosperms", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b1-4", name: "Animal Kingdom: Non-chordata up to phyla, chordata up to classes", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -28,10 +28,10 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 2: Structural Organisation in Animals & Plants",
         weightage: "~20-24 Marks",
         subtopics: [
-          { id: "b2-1", name: "Morphology of flowering plants: Root, stem, leaf, inflorescence, flower, fruit & seed", is8020: true, status: 0, ncertDone: false },
-          { id: "b2-2", name: "Plant Families: Malvaceae, Cruciferae, Leguminosae, Compositae, Gramineae", is8020: true, status: 0, ncertDone: false },
-          { id: "b2-3", name: "Plant Anatomy: Tissues, tissue systems & internal structure", is8020: false, status: 0, ncertDone: false },
-          { id: "b2-4", name: "Animal Tissues & Morphology/Anatomy of Frog (Brief Account)", is8020: true, status: 0, ncertDone: false },
+          { id: "b2-1", name: "Morphology of flowering plants: Root, stem, leaf, inflorescence, flower, fruit & seed", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b2-2", name: "Plant Families: Malvaceae, Cruciferae, Leguminosae, Compositae, Gramineae", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b2-3", name: "Plant Anatomy: Tissues, tissue systems & internal structure", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "b2-4", name: "Animal Tissues & Morphology/Anatomy of Frog (Brief Account)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -39,9 +39,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 3: Cell Structure and Function",
         weightage: "~35-40 Marks",
         subtopics: [
-          { id: "b3-1", name: "Cell Theory, Prokaryotic & Eukaryotic cells, Cell envelope & organelles", is8020: true, status: 0, ncertDone: false },
-          { id: "b3-2", name: "Biomolecules: Proteins, Carbohydrates, Lipids, Nucleic Acids & Enzymes", is8020: true, status: 0, ncertDone: false },
-          { id: "b3-3", name: "Cell Division: Cell cycle, Mitosis, Meiosis and their significance", is8020: true, status: 0, ncertDone: false },
+          { id: "b3-1", name: "Cell Theory, Prokaryotic & Eukaryotic cells, Cell envelope & organelles", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b3-2", name: "Biomolecules: Proteins, Carbohydrates, Lipids, Nucleic Acids & Enzymes", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b3-3", name: "Cell Division: Cell cycle, Mitosis, Meiosis and their significance", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -49,9 +49,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 4: Plant Physiology",
         weightage: "~28-32 Marks",
         subtopics: [
-          { id: "b4-1", name: "Photosynthesis: Light reaction, Cyclic/Non-cyclic, C3 & C4 pathways, Chemiosmosis", is8020: true, status: 0, ncertDone: false },
-          { id: "b4-2", name: "Respiration: Glycolysis, TCA cycle, ETS & ATP generation, Respiratory quotient", is8020: true, status: 0, ncertDone: false },
-          { id: "b4-3", name: "Plant Growth & Regulators: Auxin, Gibberellin, Cytokinin, Ethylene, ABA", is8020: true, status: 0, ncertDone: false },
+          { id: "b4-1", name: "Photosynthesis: Light reaction, Cyclic/Non-cyclic, C3 & C4 pathways, Chemiosmosis", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b4-2", name: "Respiration: Glycolysis, TCA cycle, ETS & ATP generation, Respiratory quotient", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b4-3", name: "Plant Growth & Regulators: Auxin, Gibberellin, Cytokinin, Ethylene, ABA", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -59,12 +59,12 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 5: Human Physiology",
         weightage: "~45-50 Marks",
         subtopics: [
-          { id: "b5-1", name: "Breathing & Respiration: Respiratory volumes, gas transport & disorders", is8020: true, status: 0, ncertDone: false },
-          { id: "b5-2", name: "Body Fluids & Circulation: Blood groups, Cardiac cycle, ECG, Double circulation", is8020: true, status: 0, ncertDone: false },
-          { id: "b5-3", name: "Excretion: Urine formation, Osmoregulation, RAAS mechanism, ADH & Dialysis", is8020: true, status: 0, ncertDone: false },
-          { id: "b5-4", name: "Locomotion & Movement: Muscle contraction, Skeletal system, Joints & disorders", is8020: false, status: 0, ncertDone: false },
-          { id: "b5-5", name: "Neural Control: Neuron, conduction of nerve impulse, CNS & PNS", is8020: true, status: 0, ncertDone: false },
-          { id: "b5-6", name: "Chemical Coordination: Endocrine glands, Hormones mechanism & disorders", is8020: true, status: 0, ncertDone: false },
+          { id: "b5-1", name: "Breathing & Respiration: Respiratory volumes, gas transport & disorders", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b5-2", name: "Body Fluids & Circulation: Blood groups, Cardiac cycle, ECG, Double circulation", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b5-3", name: "Excretion: Urine formation, Osmoregulation, RAAS mechanism, ADH & Dialysis", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b5-4", name: "Locomotion & Movement: Muscle contraction, Skeletal system, Joints & disorders", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "b5-5", name: "Neural Control: Neuron, conduction of nerve impulse, CNS & PNS", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b5-6", name: "Chemical Coordination: Endocrine glands, Hormones mechanism & disorders", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -72,9 +72,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 6: Reproduction",
         weightage: "~35-40 Marks",
         subtopics: [
-          { id: "b6-1", name: "Sexual Reproduction in Flowering Plants: Pollination, Double fertilization, Embryo", is8020: true, status: 0, ncertDone: false },
-          { id: "b6-2", name: "Human Reproduction: Gametogenesis, Menstrual cycle, Fertilization, Parturition", is8020: true, status: 0, ncertDone: false },
-          { id: "b6-3", name: "Reproductive Health: Contraception, MTP, STDs, Assisted Reproductive Tech (IVF)", is8020: true, status: 0, ncertDone: false },
+          { id: "b6-1", name: "Sexual Reproduction in Flowering Plants: Pollination, Double fertilization, Embryo", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b6-2", name: "Human Reproduction: Gametogenesis, Menstrual cycle, Fertilization, Parturition", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b6-3", name: "Reproductive Health: Contraception, MTP, STDs, Assisted Reproductive Tech (IVF)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -82,9 +82,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 7: Genetics and Evolution",
         weightage: "~48-52 Marks",
         subtopics: [
-          { id: "b7-1", name: "Mendelian Genetics: Deviations, Linkage, Sex determination & Genetic disorders", is8020: true, status: 0, ncertDone: false },
-          { id: "b7-2", name: "Molecular Basis: DNA replication, Transcription, Genetic code, Lac Operon, HGP", is8020: true, status: 0, ncertDone: false },
-          { id: "b7-3", name: "Evolution: Origin of life, Natural selection, Hardy-Weinberg Principle, Human evolution", is8020: true, status: 0, ncertDone: false },
+          { id: "b7-1", name: "Mendelian Genetics: Deviations, Linkage, Sex determination & Genetic disorders", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b7-2", name: "Molecular Basis: DNA replication, Transcription, Genetic code, Lac Operon, HGP", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b7-3", name: "Evolution: Origin of life, Natural selection, Hardy-Weinberg Principle, Human evolution", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -92,8 +92,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 8: Biology and Human Welfare",
         weightage: "~16-20 Marks",
         subtopics: [
-          { id: "b8-1", name: "Health & Disease: Pathogens (Malaria, Typhoid, AIDS), Immunity, Vaccines, Cancer", is8020: true, status: 0, ncertDone: false },
-          { id: "b8-2", name: "Microbes in Human Welfare: Household, Sewage treatment, Biogas & Biofertilizers", is8020: false, status: 0, ncertDone: false },
+          { id: "b8-1", name: "Health & Disease: Pathogens (Malaria, Typhoid, AIDS), Immunity, Vaccines, Cancer", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b8-2", name: "Microbes in Human Welfare: Household, Sewage treatment, Biogas & Biofertilizers", is8020: false, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -101,8 +101,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 9: Biotechnology and Its Applications",
         weightage: "~24-28 Marks",
         subtopics: [
-          { id: "b9-1", name: "Biotech Principles: Recombinant DNA technology, PCR, Restriction enzymes", is8020: true, status: 0, ncertDone: false },
-          { id: "b9-2", name: "Biotech Applications: Bt Crops, Insulin, Gene therapy, Transgenic animals & Biopiracy", is8020: true, status: 0, ncertDone: false },
+          { id: "b9-1", name: "Biotech Principles: Recombinant DNA technology, PCR, Restriction enzymes", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b9-2", name: "Biotech Applications: Bt Crops, Insulin, Gene therapy, Transgenic animals & Biopiracy", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -110,9 +110,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 10: Ecology and Environment",
         weightage: "~32-36 Marks",
         subtopics: [
-          { id: "b10-1", name: "Organisms & Environment: Population interactions, Birth/Death rates, Age pyramids", is8020: true, status: 0, ncertDone: false },
-          { id: "b10-2", name: "Ecosystem: Energy flow, Productivity, Ecological pyramids", is8020: true, status: 0, ncertDone: false },
-          { id: "b10-3", name: "Biodiversity & Conservation: Loss of biodiversity, Hotspots, National parks, Sacred groves", is8020: true, status: 0, ncertDone: false },
+          { id: "b10-1", name: "Organisms & Environment: Population interactions, Birth/Death rates, Age pyramids", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b10-2", name: "Ecosystem: Energy flow, Productivity, Ecological pyramids", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "b10-3", name: "Biodiversity & Conservation: Loss of biodiversity, Hotspots, National parks, Sacred groves", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
     ],
@@ -127,8 +127,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 1: Some Basic Concepts in Chemistry",
         weightage: "~8 Marks",
         subtopics: [
-          { id: "c1-1", name: "Mole Concept, Molar mass, Empirical & Molecular formula", is8020: true, status: 0, ncertDone: false },
-          { id: "c1-2", name: "Chemical equations, Limiting reagent & Stoichiometry", is8020: true, status: 0, ncertDone: false },
+          { id: "c1-1", name: "Mole Concept, Molar mass, Empirical & Molecular formula", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c1-2", name: "Chemical equations, Limiting reagent & Stoichiometry", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -136,8 +136,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 2: Atomic Structure",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "c2-1", name: "Bohr's Model, Hydrogen spectrum & dual nature (de Broglie)", is8020: true, status: 0, ncertDone: false },
-          { id: "c2-2", name: "Heisenberg uncertainty, Quantum numbers & Aufbau/Hund's rules", is8020: true, status: 0, ncertDone: false },
+          { id: "c2-1", name: "Bohr's Model, Hydrogen spectrum & dual nature (de Broglie)", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c2-2", name: "Heisenberg uncertainty, Quantum numbers & Aufbau/Hund's rules", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -145,10 +145,10 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 3: Chemical Bonding & Molecular Structure",
         weightage: "~16-20 Marks",
         subtopics: [
-          { id: "c3-1", name: "Ionic & Covalent bonds, Lattice enthalpy & Fajan's rule", is8020: true, status: 0, ncertDone: false },
-          { id: "c3-2", name: "VSEPR Theory & Molecular geometry", is8020: true, status: 0, ncertDone: false },
-          { id: "c3-3", name: "Hybridization (sp, sp2, sp3, d-orbitals) & Dipole moment", is8020: true, status: 0, ncertDone: false },
-          { id: "c3-4", name: "Molecular Orbital Theory (MOT) & Hydrogen bonding", is8020: true, status: 0, ncertDone: false },
+          { id: "c3-1", name: "Ionic & Covalent bonds, Lattice enthalpy & Fajan's rule", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c3-2", name: "VSEPR Theory & Molecular geometry", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c3-3", name: "Hybridization (sp, sp2, sp3, d-orbitals) & Dipole moment", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c3-4", name: "Molecular Orbital Theory (MOT) & Hydrogen bonding", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -156,8 +156,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 4: Chemical Thermodynamics",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "c4-1", name: "First Law: Heat, Work, Internal energy & Enthalpy of reactions", is8020: true, status: 0, ncertDone: false },
-          { id: "c4-2", name: "Second Law: Entropy (ΔS) and Gibbs Free Energy (ΔG) spontaneity", is8020: true, status: 0, ncertDone: false },
+          { id: "c4-1", name: "First Law: Heat, Work, Internal energy & Enthalpy of reactions", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c4-2", name: "Second Law: Entropy (ΔS) and Gibbs Free Energy (ΔG) spontaneity", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -165,8 +165,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 5: Solutions",
         weightage: "~8 Marks",
         subtopics: [
-          { id: "c5-1", name: "Concentration units & Raoult's Law (Ideal/Non-ideal)", is8020: false, status: 0, ncertDone: false },
-          { id: "c5-2", name: "Colligative properties & van't Hoff factor (i)", is8020: true, status: 0, ncertDone: false },
+          { id: "c5-1", name: "Concentration units & Raoult's Law (Ideal/Non-ideal)", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "c5-2", name: "Colligative properties & van't Hoff factor (i)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -174,8 +174,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 6: Equilibrium",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "c6-1", name: "Chemical Equilibrium: Kp, Kc & Le Chatelier's Principle", is8020: true, status: 0, ncertDone: false },
-          { id: "c6-2", name: "Ionic Equilibrium: pH, Buffer solutions, Salt hydrolysis & Ksp", is8020: true, status: 0, ncertDone: false },
+          { id: "c6-1", name: "Chemical Equilibrium: Kp, Kc & Le Chatelier's Principle", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c6-2", name: "Ionic Equilibrium: pH, Buffer solutions, Salt hydrolysis & Ksp", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -183,8 +183,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 7: Redox Reactions & Electrochemistry",
         weightage: "~12 Marks",
         subtopics: [
-          { id: "c7-1", name: "Redox balancing & Oxidation number methods", is8020: false, status: 0, ncertDone: false },
-          { id: "c7-2", name: "Nernst Equation, Electrochemical cells & Kohlrausch's law", is8020: true, status: 0, ncertDone: false },
+          { id: "c7-1", name: "Redox balancing & Oxidation number methods", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "c7-2", name: "Nernst Equation, Electrochemical cells & Kohlrausch's law", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -192,8 +192,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 8: Chemical Kinetics",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "c8-1", name: "Order and Molecularity, Integrated rate law (Zero & First Order)", is8020: true, status: 0, ncertDone: false },
-          { id: "c8-2", name: "Arrhenius equation & Activation energy calculation", is8020: true, status: 0, ncertDone: false },
+          { id: "c8-1", name: "Order and Molecularity, Integrated rate law (Zero & First Order)", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c8-2", name: "Arrhenius equation & Activation energy calculation", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -201,8 +201,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 9 & 10: Periodic Table & p-Block Elements",
         weightage: "~16 Marks",
         subtopics: [
-          { id: "c9-1", name: "Periodic trends: Radii, Ionization energy, Electronegativity", is8020: true, status: 0, ncertDone: false },
-          { id: "c9-2", name: "p-Block (Group 13 to 18): General electronic trends & anomalous behavior", is8020: true, status: 0, ncertDone: false },
+          { id: "c9-1", name: "Periodic trends: Radii, Ionization energy, Electronegativity", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c9-2", name: "p-Block (Group 13 to 18): General electronic trends & anomalous behavior", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -210,8 +210,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 11: d- & f- Block Elements",
         weightage: "~12 Marks",
         subtopics: [
-          { id: "c11-1", name: "Transition elements trends, K2Cr2O7 & KMnO4 chemistry", is8020: true, status: 0, ncertDone: false },
-          { id: "c11-2", name: "Lanthanoids (Contraction) & Actinoids oxidation states", is8020: true, status: 0, ncertDone: false },
+          { id: "c11-1", name: "Transition elements trends, K2Cr2O7 & KMnO4 chemistry", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c11-2", name: "Lanthanoids (Contraction) & Actinoids oxidation states", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -219,8 +219,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 12: Coordination Compounds",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "c12-1", name: "Werner's Theory, IUPAC nomenclature & Isomerism", is8020: true, status: 0, ncertDone: false },
-          { id: "c12-2", name: "Valence Bond Theory (VBT) & Crystal Field Theory (CFT)", is8020: true, status: 0, ncertDone: false },
+          { id: "c12-1", name: "Werner's Theory, IUPAC nomenclature & Isomerism", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c12-2", name: "Valence Bond Theory (VBT) & Crystal Field Theory (CFT)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -228,10 +228,10 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 14 & 15: Organic Chemistry (GOC & Hydrocarbons)",
         weightage: "~24 Marks",
         subtopics: [
-          { id: "c14-1", name: "Inductive, Electromeric, Resonance & Hyperconjugation", is8020: true, status: 0, ncertDone: false },
-          { id: "c14-2", name: "Carbocation/Carbanion stability & Reaction mechanisms", is8020: true, status: 0, ncertDone: false },
-          { id: "c14-3", name: "Alkanes, Alkenes (Markownikoff's rule, Ozonolysis) & Alkynes", is8020: true, status: 0, ncertDone: false },
-          { id: "c14-4", name: "Aromatic hydrocarbons: Electrophilic substitution & Friedel-Crafts", is8020: true, status: 0, ncertDone: false },
+          { id: "c14-1", name: "Inductive, Electromeric, Resonance & Hyperconjugation", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c14-2", name: "Carbocation/Carbanion stability & Reaction mechanisms", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c14-3", name: "Alkanes, Alkenes (Markownikoff's rule, Ozonolysis) & Alkynes", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c14-4", name: "Aromatic hydrocarbons: Electrophilic substitution & Friedel-Crafts", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -239,10 +239,10 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 16 & 17: Halogens & Oxygen Compounds (Alcohols, Aldehydes, Acids)",
         weightage: "~28 Marks",
         subtopics: [
-          { id: "c16-1", name: "Haloalkanes & Haloarenes: SN1 and SN2 mechanisms", is8020: true, status: 0, ncertDone: false },
-          { id: "c16-2", name: "Alcohols, Phenols (Reimer-Tiemann) & Ethers", is8020: true, status: 0, ncertDone: false },
-          { id: "c16-3", name: "Aldehydes & Ketones: Nucleophilic addition, Aldol & Cannizzaro", is8020: true, status: 0, ncertDone: false },
-          { id: "c16-4", name: "Carboxylic Acids: Acidic strength & key derivatives", is8020: false, status: 0, ncertDone: false },
+          { id: "c16-1", name: "Haloalkanes & Haloarenes: SN1 and SN2 mechanisms", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c16-2", name: "Alcohols, Phenols (Reimer-Tiemann) & Ethers", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c16-3", name: "Aldehydes & Ketones: Nucleophilic addition, Aldol & Cannizzaro", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c16-4", name: "Carboxylic Acids: Acidic strength & key derivatives", is8020: false, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -250,8 +250,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 18 & 19: Nitrogen Compounds & Biomolecules",
         weightage: "~16 Marks",
         subtopics: [
-          { id: "c18-1", name: "Amines: Basicity order, Gabriel synthesis & Diazonium salts", is8020: true, status: 0, ncertDone: false },
-          { id: "c18-2", name: "Biomolecules: Carbohydrates, Amino acids, Peptide bonds, DNA/RNA", is8020: true, status: 0, ncertDone: false },
+          { id: "c18-1", name: "Amines: Basicity order, Gabriel synthesis & Diazonium salts", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "c18-2", name: "Biomolecules: Carbohydrates, Amino acids, Peptide bonds, DNA/RNA", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -259,7 +259,7 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 20: Principles Related to Practical Chemistry",
         weightage: "~8 Marks",
         subtopics: [
-          { id: "c20-1", name: "Salt analysis (Cation/Anion detection) & Volumetric titrations", is8020: false, status: 0, ncertDone: false },
+          { id: "c20-1", name: "Salt analysis (Cation/Anion detection) & Volumetric titrations", is8020: false, status: 0, ncertDone: false, dppDone: false },
         ],
       },
     ],
@@ -274,8 +274,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 1: Physics and Measurement",
         weightage: "~4-8 Marks",
         subtopics: [
-          { id: "p1-1", name: "SI Units, Dimensions of Physical Quantities & Applications", is8020: true, status: 0, ncertDone: false },
-          { id: "p1-2", name: "Errors in measurements, Significant figures & Least count", is8020: true, status: 0, ncertDone: false },
+          { id: "p1-1", name: "SI Units, Dimensions of Physical Quantities & Applications", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p1-2", name: "Errors in measurements, Significant figures & Least count", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -283,9 +283,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 2: Kinematics",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "p2-1", name: "Motion in a straight line: v-t graphs & uniformly accelerated equations", is8020: true, status: 0, ncertDone: false },
-          { id: "p2-2", name: "Vectors: Resolution, dot & cross products, Unit vectors", is8020: true, status: 0, ncertDone: false },
-          { id: "p2-3", name: "Projectile Motion & Uniform Circular Motion", is8020: true, status: 0, ncertDone: false },
+          { id: "p2-1", name: "Motion in a straight line: v-t graphs & uniformly accelerated equations", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p2-2", name: "Vectors: Resolution, dot & cross products, Unit vectors", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p2-3", name: "Projectile Motion & Uniform Circular Motion", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -293,9 +293,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 3: Laws of Motion",
         weightage: "~12 Marks",
         subtopics: [
-          { id: "p3-1", name: "Newton's Laws of Motion & Conservation of Linear Momentum", is8020: true, status: 0, ncertDone: false },
-          { id: "p3-2", name: "Static, Kinetic & Rolling Friction", is8020: true, status: 0, ncertDone: false },
-          { id: "p3-3", name: "Dynamics of circular motion: Level & banked road vehicle dynamics", is8020: true, status: 0, ncertDone: false },
+          { id: "p3-1", name: "Newton's Laws of Motion & Conservation of Linear Momentum", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p3-2", name: "Static, Kinetic & Rolling Friction", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p3-3", name: "Dynamics of circular motion: Level & banked road vehicle dynamics", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -303,9 +303,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 4: Work, Energy, and Power",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "p4-1", name: "Work done by constant/variable forces & Work-Energy Theorem", is8020: true, status: 0, ncertDone: false },
-          { id: "p4-2", name: "Potential energy of spring & vertical circular motion", is8020: true, status: 0, ncertDone: false },
-          { id: "p4-3", name: "Elastic & Inelastic collisions in 1D and 2D", is8020: true, status: 0, ncertDone: false },
+          { id: "p4-1", name: "Work done by constant/variable forces & Work-Energy Theorem", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p4-2", name: "Potential energy of spring & vertical circular motion", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p4-3", name: "Elastic & Inelastic collisions in 1D and 2D", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -313,8 +313,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 5: Rotational Motion",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "p5-1", name: "Center of Mass, Torque & Conservation of Angular Momentum", is8020: true, status: 0, ncertDone: false },
-          { id: "p5-2", name: "Moment of Inertia, Radius of gyration & Parallel/Perpendicular axes theorems", is8020: true, status: 0, ncertDone: false },
+          { id: "p5-1", name: "Center of Mass, Torque & Conservation of Angular Momentum", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p5-2", name: "Moment of Inertia, Radius of gyration & Parallel/Perpendicular axes theorems", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -322,8 +322,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 6: Gravitation",
         weightage: "~8 Marks",
         subtopics: [
-          { id: "p6-1", name: "Universal Law, Variation of g with altitude/depth & Kepler's Laws", is8020: true, status: 0, ncertDone: false },
-          { id: "p6-2", name: "Gravitational potential, Escape velocity & Satellite orbital velocity", is8020: true, status: 0, ncertDone: false },
+          { id: "p6-1", name: "Universal Law, Variation of g with altitude/depth & Kepler's Laws", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p6-2", name: "Gravitational potential, Escape velocity & Satellite orbital velocity", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -331,9 +331,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 7: Properties of Solids and Liquids",
         weightage: "~12 Marks",
         subtopics: [
-          { id: "p7-1", name: "Stress-Strain, Hooke's Law & Young's/Bulk Modulus", is8020: false, status: 0, ncertDone: false },
-          { id: "p7-2", name: "Pascal's Law, Viscosity, Stokes' Law & Bernoulli's Principle", is8020: true, status: 0, ncertDone: false },
-          { id: "p7-3", name: "Surface tension, Capillary rise, Calorimetry & Heat transfer", is8020: true, status: 0, ncertDone: false },
+          { id: "p7-1", name: "Stress-Strain, Hooke's Law & Young's/Bulk Modulus", is8020: false, status: 0, ncertDone: false, dppDone: false },
+          { id: "p7-2", name: "Pascal's Law, Viscosity, Stokes' Law & Bernoulli's Principle", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p7-3", name: "Surface tension, Capillary rise, Calorimetry & Heat transfer", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -341,8 +341,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 8 & 9: Thermodynamics & KTG",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "p8-1", name: "First & Second Laws of Thermodynamics, Isothermal & Adiabatic processes", is8020: true, status: 0, ncertDone: false },
-          { id: "p8-2", name: "Kinetic Theory of Gases: RMS speed, Degrees of freedom & Law of equipartition", is8020: true, status: 0, ncertDone: false },
+          { id: "p8-1", name: "First & Second Laws of Thermodynamics, Isothermal & Adiabatic processes", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p8-2", name: "Kinetic Theory of Gases: RMS speed, Degrees of freedom & Law of equipartition", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -350,8 +350,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 10: Oscillations and Waves",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "p10-1", name: "SHM Equation, Phase, Spring oscillations & Simple pendulum", is8020: true, status: 0, ncertDone: false },
-          { id: "p10-2", name: "Progressive waves, Standing waves in strings/organ pipes & Beats", is8020: true, status: 0, ncertDone: false },
+          { id: "p10-1", name: "SHM Equation, Phase, Spring oscillations & Simple pendulum", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p10-2", name: "Progressive waves, Standing waves in strings/organ pipes & Beats", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -359,8 +359,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 11: Electrostatics",
         weightage: "~16 Marks",
         subtopics: [
-          { id: "p11-1", name: "Coulomb's Law, Electric field, Electric dipole & Gauss's Law", is8020: true, status: 0, ncertDone: false },
-          { id: "p11-2", name: "Electric potential, Equipotential surfaces & Capacitors (Series/Parallel)", is8020: true, status: 0, ncertDone: false },
+          { id: "p11-1", name: "Coulomb's Law, Electric field, Electric dipole & Gauss's Law", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p11-2", name: "Electric potential, Equipotential surfaces & Capacitors (Series/Parallel)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -368,8 +368,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 12: Current Electricity",
         weightage: "~16-20 Marks",
         subtopics: [
-          { id: "p12-1", name: "Ohm's Law, Drift velocity, Resistance temperature dependence", is8020: true, status: 0, ncertDone: false },
-          { id: "p12-2", name: "Kirchhoff's Laws, Cell EMF & combinations, Wheatstone bridge", is8020: true, status: 0, ncertDone: false },
+          { id: "p12-1", name: "Ohm's Law, Drift velocity, Resistance temperature dependence", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p12-2", name: "Kirchhoff's Laws, Cell EMF & combinations, Wheatstone bridge", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -377,8 +377,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 13: Magnetic Effects of Current & Magnetism",
         weightage: "~16 Marks",
         subtopics: [
-          { id: "p13-1", name: "Biot-Savart Law, Ampere's Law & Force on moving charge in B-field", is8020: true, status: 0, ncertDone: false },
-          { id: "p13-2", name: "Moving Coil Galvanometer conversion & Magnetic materials (Para/Dia/Ferro)", is8020: true, status: 0, ncertDone: false },
+          { id: "p13-1", name: "Biot-Savart Law, Ampere's Law & Force on moving charge in B-field", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p13-2", name: "Moving Coil Galvanometer conversion & Magnetic materials (Para/Dia/Ferro)", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -386,8 +386,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 14 & 15: EMI, AC & EM Waves",
         weightage: "~12-16 Marks",
         subtopics: [
-          { id: "p14-1", name: "Faraday's & Lenz's Law, Inductance & AC circuits (LCR Series resonance)", is8020: true, status: 0, ncertDone: false },
-          { id: "p14-2", name: "Electromagnetic Spectrum & Characteristics of EM Waves", is8020: false, status: 0, ncertDone: false },
+          { id: "p14-1", name: "Faraday's & Lenz's Law, Inductance & AC circuits (LCR Series resonance)", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p14-2", name: "Electromagnetic Spectrum & Characteristics of EM Waves", is8020: false, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -395,8 +395,8 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 16: Optics",
         weightage: "~16-20 Marks",
         subtopics: [
-          { id: "p16-1", name: "Ray Optics: Reflection, Refraction, Lens maker formula, Prisms & Optical instruments", is8020: true, status: 0, ncertDone: false },
-          { id: "p16-2", name: "Wave Optics: Huygens' principle, Interference (YDSE) & Diffraction", is8020: true, status: 0, ncertDone: false },
+          { id: "p16-1", name: "Ray Optics: Reflection, Refraction, Lens maker formula, Prisms & Optical instruments", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p16-2", name: "Wave Optics: Huygens' principle, Interference (YDSE) & Diffraction", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -404,9 +404,9 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 17, 18 & 19: Modern Physics & Semiconductors",
         weightage: "~24-28 Marks",
         subtopics: [
-          { id: "p17-1", name: "Dual Nature: Photoelectric Effect & de Broglie relation", is8020: true, status: 0, ncertDone: false },
-          { id: "p17-2", name: "Atoms & Nuclei: Bohr model, Mass defect, Binding energy, Fission/Fusion", is8020: true, status: 0, ncertDone: false },
-          { id: "p17-3", name: "Semiconductor Diodes, Zener diode as regulator & Logic Gates", is8020: true, status: 0, ncertDone: false },
+          { id: "p17-1", name: "Dual Nature: Photoelectric Effect & de Broglie relation", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p17-2", name: "Atoms & Nuclei: Bohr model, Mass defect, Binding energy, Fission/Fusion", is8020: true, status: 0, ncertDone: false, dppDone: false },
+          { id: "p17-3", name: "Semiconductor Diodes, Zener diode as regulator & Logic Gates", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
       {
@@ -414,7 +414,7 @@ const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
         title: "UNIT 20: Experimental Skills",
         weightage: "~8-12 Marks",
         subtopics: [
-          { id: "p20-1", name: "Vernier, Screw gauge, Metre bridge, Simple pendulum & Prism deviation", is8020: true, status: 0, ncertDone: false },
+          { id: "p20-1", name: "Vernier, Screw gauge, Metre bridge, Simple pendulum & Prism deviation", is8020: true, status: 0, ncertDone: false, dppDone: false },
         ],
       },
     ],
@@ -428,13 +428,17 @@ export default function NeetDashboard() {
   const [historyStack, setHistoryStack] = useState<NeetSubjectGroup[][]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("shekhu_neet_official_syllabus_v3");
+    const saved = localStorage.getItem("shekhu_neet_official_syllabus_v4");
     if (saved) {
-      try { setSubjects(JSON.parse(saved)); } catch (e) {}
+      try {
+        setSubjects(JSON.parse(saved));
+      } catch (e) {}
     }
-    const savedMocks = localStorage.getItem("shekhu_pw_tests_v2");
+    const savedMocks = localStorage.getItem("shekhu_pw_tests_v3");
     if (savedMocks) {
-      try { setPwTests(JSON.parse(savedMocks)); } catch (e) {}
+      try {
+        setPwTests(JSON.parse(savedMocks));
+      } catch (e) {}
     }
   }, []);
 
@@ -454,14 +458,16 @@ export default function NeetDashboard() {
           if (chap.id !== chapterId) return chap;
           return {
             ...chap,
-            subtopics: chap.subtopics.map((st) => (st.id === subtopicId ? { ...st, ...updates } : st)),
+            subtopics: chap.subtopics.map((st) =>
+              st.id === subtopicId ? { ...st, ...updates } : st
+            ),
           };
         }),
       };
     });
 
     setSubjects(updated);
-    localStorage.setItem("shekhu_neet_official_syllabus_v3", JSON.stringify(updated));
+    localStorage.setItem("shekhu_neet_official_syllabus_v4", JSON.stringify(updated));
   };
 
   const handleUndo = () => {
@@ -469,13 +475,13 @@ export default function NeetDashboard() {
     const prev = historyStack[historyStack.length - 1];
     setHistoryStack((p) => p.slice(0, -1));
     setSubjects(prev);
-    localStorage.setItem("shekhu_neet_official_syllabus_v3", JSON.stringify(prev));
+    localStorage.setItem("shekhu_neet_official_syllabus_v4", JSON.stringify(prev));
   };
 
   const handleAddTest = (entry: PwMockEntry) => {
     const updated = [...pwTests, entry];
     setPwTests(updated);
-    localStorage.setItem("shekhu_pw_tests_v2", JSON.stringify(updated));
+    localStorage.setItem("shekhu_pw_tests_v3", JSON.stringify(updated));
   };
 
   let totalSubtopics = 0;
@@ -488,7 +494,8 @@ export default function NeetDashboard() {
       });
     });
   });
-  const overallProgress = totalSubtopics > 0 ? Math.round((masteredSubtopics / totalSubtopics) * 100) : 0;
+  const overallProgress =
+    totalSubtopics > 0 ? Math.round((masteredSubtopics / totalSubtopics) * 100) : 0;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fafafd]">
@@ -499,7 +506,9 @@ export default function NeetDashboard() {
           <button
             onClick={() => setActiveTab("habits")}
             className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "habits" ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]" : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              activeTab === "habits"
+                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
             }`}
           >
             📅 MONTHLY HABIT GRID (6H / 30M WALK)
@@ -507,7 +516,9 @@ export default function NeetDashboard() {
           <button
             onClick={() => setActiveTab("syllabus")}
             className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "syllabus" ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]" : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              activeTab === "syllabus"
+                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
             }`}
           >
             🩺 FULL NEET SYLLABUS &amp; SUBTOPICS
@@ -515,14 +526,17 @@ export default function NeetDashboard() {
           <button
             onClick={() => setActiveTab("pwMocks")}
             className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "pwMocks" ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]" : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              activeTab === "pwMocks"
+                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
             }`}
           >
-            PW TEST RADAR (680+ BENCHMARK)
+            PW TEST RADAR &amp; UPCOMING TARGETS
           </button>
         </div>
 
         {activeTab === "habits" && <DailyTracker />}
+
         {activeTab === "syllabus" && (
           <SyllabusTracker
             subjects={subjects}
@@ -531,8 +545,9 @@ export default function NeetDashboard() {
             canUndo={historyStack.length > 0}
           />
         )}
+
         {activeTab === "pwMocks" && (
-          <PWMockLogger tests={pwTests} onAddTest={handleAddTest} />
+          <PWMockLogger tests={pwTests} onAddTest={handleAddTest} subjects={subjects} />
         )}
       </main>
 

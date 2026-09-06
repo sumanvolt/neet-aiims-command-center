@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Check, Filter, RotateCcw, BookOpen } from "lucide-react";
+import { ChevronDown, ChevronUp, Check, Filter, RotateCcw } from "lucide-react";
 
 export interface NeetSubTopic {
   id: string;
@@ -9,6 +9,7 @@ export interface NeetSubTopic {
   is8020: boolean;
   status: 0 | 1 | 2 | 3;
   ncertDone: boolean;
+  dppDone: boolean; // DPP tracking
 }
 
 export interface NeetChapter {
@@ -60,7 +61,6 @@ export default function SyllabusTracker({
 
   return (
     <div className="space-y-6">
-      {/* Action and Filter Ribbon */}
       <div className="bg-white border-2 border-[#122056] p-4 shadow-[4px_4px_0px_0px_#122056] flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <Filter className="w-4 h-4 text-[#5b65dc]" />
@@ -86,7 +86,6 @@ export default function SyllabusTracker({
         </div>
       </div>
 
-      {/* 3-Tier Hierarchy: Subject -> Chapter/Unit -> Granular Subtopic */}
       <div className="space-y-4">
         {subjects.map((subj) => {
           const isOpenSubj = openSubjects[subj.key] ?? false;
@@ -103,7 +102,6 @@ export default function SyllabusTracker({
 
           return (
             <div key={subj.key} className="border-2 border-[#122056] bg-white shadow-[4px_4px_0px_0px_#122056]">
-              {/* Subject Title Bar */}
               <div
                 onClick={() => toggleSubject(subj.key)}
                 className="cursor-pointer p-4 bg-[#eeeffd] hover:bg-[#e0e3fc] border-b-2 border-[#122056] flex flex-wrap items-center justify-between gap-4 select-none"
@@ -122,7 +120,6 @@ export default function SyllabusTracker({
                 </div>
               </div>
 
-              {/* Chapters List */}
               {isOpenSubj && (
                 <div className="p-3 sm:p-4 space-y-3 bg-[#fafafd]">
                   {subj.chapters.map((chap) => {
@@ -134,7 +131,6 @@ export default function SyllabusTracker({
 
                     return (
                       <div key={chap.id} className="border-2 border-[#122056] bg-white shadow-[2px_2px_0px_0px_#122056]">
-                        {/* Chapter Bar */}
                         <div
                           onClick={() => toggleChapter(chap.id)}
                           className="cursor-pointer p-3 bg-white hover:bg-slate-50 border-b border-[#122056]/20 flex items-center justify-between gap-2 select-none"
@@ -153,7 +149,6 @@ export default function SyllabusTracker({
                           </div>
                         </div>
 
-                        {/* Granular Subtopics */}
                         {isOpenChap && (
                           <div className="divide-y divide-[#122056]/10 p-2 sm:p-3 space-y-2">
                             {filteredSubtopics.map((st) => (
@@ -180,7 +175,17 @@ export default function SyllabusTracker({
                                       st.ncertDone ? "bg-[#10b981] text-white" : "bg-white text-slate-500"
                                     }`}
                                   >
-                                    <Check className="w-3 h-3" /> NCERT READ
+                                    <Check className="w-3 h-3" /> NCERT
+                                  </button>
+
+                                  {/* DPP Done Check */}
+                                  <button
+                                    onClick={() => onUpdateSubtopic(subj.key, chap.id, st.id, { dppDone: !st.dppDone })}
+                                    className={`px-2 py-1 text-[10px] font-black border-2 border-[#122056] flex items-center gap-1 shadow-[2px_2px_0px_0px_#122056] ${
+                                      st.dppDone ? "bg-[#5b65dc] text-white" : "bg-white text-slate-500"
+                                    }`}
+                                  >
+                                    <Check className="w-3 h-3" /> DPP DONE
                                   </button>
 
                                   {/* Step Back Undo */}
