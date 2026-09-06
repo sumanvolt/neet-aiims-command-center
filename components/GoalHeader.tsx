@@ -13,7 +13,6 @@ export default function GoalHeader({ overallProgress }: GoalHeaderProps) {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallBtn, setShowInstallBtn] = useState(false);
 
-  // Target: NEET 2027 (First Sunday of May 2027)
   const neetExamDate = new Date("2027-05-02T14:00:00").getTime();
 
   useEffect(() => {
@@ -53,20 +52,19 @@ export default function GoalHeader({ overallProgress }: GoalHeaderProps) {
   };
 
   return (
-    <header className="border-b-4 border-black bg-[#f5a623] p-3 sm:p-6 shadow-[4px_4px_0px_0px_#000]">
+    <header className="border-b-4 border-[#122056] bg-[#5b65dc] p-3 sm:p-6 shadow-[4px_4px_0px_0px_#122056]">
       <div className="max-w-7xl mx-auto flex flex-col gap-4">
-        {/* Navigation & Tag */}
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           <div className="flex items-center gap-2 max-w-full">
-            <div className="flex items-center border-2 border-black bg-black shadow-[2px_2px_0px_0px_#000] overflow-hidden whitespace-nowrap">
-              <span className="bg-[#ffe600] text-black text-[10px] sm:text-xs font-black px-2.5 py-1 tracking-wider flex items-center gap-1">
+            <div className="flex items-center border-2 border-[#122056] bg-[#122056] shadow-[2px_2px_0px_0px_#122056] overflow-hidden whitespace-nowrap">
+              <span className="bg-[#eeeffd] text-[#122056] text-[10px] sm:text-xs font-black px-2.5 py-1 tracking-wider flex items-center gap-1">
                 <span>🩺</span> AQUASHEKHAR
               </span>
               <span className="text-white text-[9px] sm:text-[11px] font-mono font-bold px-2 py-1">
-                SHEKHUBOSS_v1.0
+                SHEKHUBOSS_v2.0
               </span>
             </div>
-            <span className="hidden sm:inline-block bg-[#2c0d0d] text-white font-black text-xs px-2.5 py-1 border-2 border-black">
+            <span className="hidden sm:inline-block bg-[#122056] text-white font-black text-xs px-2.5 py-1 border-2 border-[#122056]">
               TARGET: AIIMS DEOGHAR
             </span>
           </div>
@@ -75,96 +73,94 @@ export default function GoalHeader({ overallProgress }: GoalHeaderProps) {
             {showInstallBtn && (
               <button
                 onClick={handleInstallClick}
-                className="bg-[#ffe600] text-black text-[10px] sm:text-xs font-black px-2.5 py-1 border-2 border-black shadow-[2px_2px_0px_0px_#000] flex items-center gap-1 animate-pulse"
+                className="bg-[#eeeffd] hover:bg-white text-[#122056] text-[10px] sm:text-xs font-black px-2.5 py-1 border-2 border-[#122056] shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1 animate-pulse"
               >
                 <DownloadCloud className="w-3.5 h-3.5" /> INSTALL APP
               </button>
             )}
-            <div className="bg-white px-2.5 py-1 border-2 border-black font-bold text-[10px] sm:text-xs shadow-[2px_2px_0px_0px_#000] flex items-center gap-1.5 whitespace-nowrap">
+            <div className="bg-[#eeeffd] px-2.5 py-1 border-2 border-[#122056] font-bold text-[10px] sm:text-xs shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 whitespace-nowrap">
               <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-              SYNCED ON MOBILE
+              MOBILE SYNCED
             </div>
           </div>
         </div>
 
-        {/* Motivation Banner */}
-        <div className="bg-[#2c0d0d] text-[#ffe600] border-2 border-black px-3 py-1.5 shadow-[2px_2px_0px_0px_#000] flex items-center gap-2 text-xs font-bold">
-          <Sparkles className="w-4 h-4 text-[#ffe600] shrink-0" />
+        <div className="bg-[#122056] text-[#eeeffd] border-2 border-[#122056] px-3 py-1.5 shadow-[2px_2px_0px_0px_#122056] flex items-center gap-2 text-xs font-bold">
+          <Sparkles className="w-4 h-4 text-[#5b65dc] shrink-0" />
           <span>&quot;One more revision tonight can change your rank tomorrow.&quot;</span>
         </div>
 
-        {/* Cards Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
-          <div className="bg-white border-2 border-black p-3 sm:p-4 shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+          <div className="bg-white border-2 border-[#122056] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-black tracking-wider text-[#2c0d0d] flex items-center gap-1.5">
-                <Target className="w-4 h-4" /> CUTOFF BENCHMARKS
+              <span className="text-xs font-black tracking-wider text-[#122056] flex items-center gap-1.5">
+                <Target className="w-4 h-4 text-[#5b65dc]" /> CUTOFF BENCHMARKS
               </span>
-              <span className="text-[10px] bg-[#ffe600] border-2 border-black font-black px-1.5 py-0.2">NEET 2027</span>
+              <span className="text-[10px] bg-[#eeeffd] text-[#122056] border-2 border-[#122056] font-black px-1.5 py-0.2">NEET 2027</span>
             </div>
             <div className="space-y-1.5 text-xs font-bold">
-              <div className="flex justify-between border-b border-black/15 pb-0.5">
+              <div className="flex justify-between border-b border-[#122056]/15 pb-0.5">
                 <span>AIIMS Deoghar (Target):</span>
-                <span className="text-[#2c0d0d] font-black">~680+ / 720</span>
+                <span className="text-[#5b65dc] font-black">~680+ / 720</span>
               </div>
-              <div className="flex justify-between border-b border-black/15 pb-0.5">
+              <div className="flex justify-between border-b border-[#122056]/15 pb-0.5">
                 <span>AIIMS Kalyani / Patna:</span>
-                <span className="text-[#2c0d0d] font-black">~675+ / 720</span>
+                <span className="text-[#122056] font-black">~675+ / 720</span>
               </div>
               <div className="flex justify-between">
-                <span>PW Test Goal:</span>
-                <span className="text-[#10b981] font-black">Accuracy &gt; 92%</span>
+                <span>PW Accuracy Benchmark:</span>
+                <span className="text-[#10b981] font-black">&gt; 92%</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-[#2c0d0d] text-white border-2 border-black p-3 sm:p-4 shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+          <div className="bg-[#122056] text-white border-2 border-[#122056] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-black text-[#f5a623] flex items-center gap-1.5">
-                <Timer className="w-4 h-4" /> NEET 2027 CLOCK
+              <span className="text-xs font-black text-[#5b65dc] flex items-center gap-1.5">
+                <Timer className="w-4 h-4" /> NEET 2027 COUNTDOWN
               </span>
-              <span className="text-[10px] text-amber-200 font-bold">MAY 2027</span>
+              <span className="text-[10px] text-indigo-200 font-bold">MAY 2027</span>
             </div>
             <div className="grid grid-cols-4 gap-1 text-center my-1">
-              <div className="bg-[#4a1212] border-2 border-black p-1 sm:p-1.5">
-                <div className="text-lg sm:text-xl font-black text-[#ffe600]">{timeLeft.days}</div>
+              <div className="bg-[#1b2b6d] border-2 border-[#122056] p-1 sm:p-1.5">
+                <div className="text-lg sm:text-xl font-black text-[#5b65dc]">{timeLeft.days}</div>
                 <div className="text-[8px] sm:text-[9px] text-slate-300">DAYS</div>
               </div>
-              <div className="bg-[#4a1212] border-2 border-black p-1 sm:p-1.5">
+              <div className="bg-[#1b2b6d] border-2 border-[#122056] p-1 sm:p-1.5">
                 <div className="text-lg sm:text-xl font-black text-white">{timeLeft.hours}</div>
                 <div className="text-[8px] sm:text-[9px] text-slate-300">HRS</div>
               </div>
-              <div className="bg-[#4a1212] border-2 border-black p-1 sm:p-1.5">
+              <div className="bg-[#1b2b6d] border-2 border-[#122056] p-1 sm:p-1.5">
                 <div className="text-lg sm:text-xl font-black text-white">{timeLeft.minutes}</div>
                 <div className="text-[8px] sm:text-[9px] text-slate-300">MIN</div>
               </div>
-              <div className="bg-[#4a1212] border-2 border-black p-1 sm:p-1.5">
-                <div className="text-lg sm:text-xl font-black text-[#00e5ff]">{timeLeft.seconds}</div>
+              <div className="bg-[#1b2b6d] border-2 border-[#122056] p-1 sm:p-1.5">
+                <div className="text-lg sm:text-xl font-black text-[#10b981]">{timeLeft.seconds}</div>
                 <div className="text-[8px] sm:text-[9px] text-slate-300">SEC</div>
               </div>
             </div>
-            <div className="text-[10px] text-amber-100 flex justify-between mt-0.5">
-              <span>Non-negotiable Habit:</span>
-              <span className="text-[#10b981] font-black">30m Daily Walk</span>
+            <div className="text-[10px] text-indigo-100 flex justify-between mt-0.5">
+              <span>Daily Target:</span>
+              <span className="text-[#10b981] font-black">6h Study + 30m Walk</span>
             </div>
           </div>
 
-          <div className="bg-[#00e5ff] border-2 border-black p-3 sm:p-4 shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+          <div className="bg-[#eeeffd] border-2 border-[#122056] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black tracking-wider text-black flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-[#ff007a]" /> SYLLABUS READINESS
+              <span className="text-xs font-black tracking-wider text-[#122056] flex items-center gap-1.5">
+                <Flame className="w-4 h-4 text-[#ff4757]" /> SYLLABUS READINESS
               </span>
-              <span className="text-lg sm:text-xl font-black">{overallProgress}%</span>
+              <span className="text-lg sm:text-xl font-black text-[#122056]">{overallProgress}%</span>
             </div>
-            <div className="w-full bg-white border-2 border-black h-5 sm:h-6 my-1.5 relative overflow-hidden">
+            <div className="w-full bg-white border-2 border-[#122056] h-5 sm:h-6 my-1.5 relative overflow-hidden">
               <motion.div
-                className="h-full bg-[#ff007a] border-r-2 border-black"
+                className="h-full bg-[#5b65dc] border-r-2 border-[#122056]"
                 initial={{ width: 0 }}
                 animate={{ width: `${overallProgress}%` }}
                 transition={{ type: "spring", stiffness: 60 }}
               />
             </div>
-            <div className="flex justify-between text-[10px] sm:text-[11px] font-black text-black">
+            <div className="flex justify-between text-[10px] sm:text-[11px] font-black text-[#122056]">
               <span>NCERT Base</span>
               <span>Target: 680+ Marks</span>
             </div>
