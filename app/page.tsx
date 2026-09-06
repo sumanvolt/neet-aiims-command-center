@@ -67,12 +67,12 @@ export default function NeetDashboard() {
   }, []);
 
   const handleUpdateTopic = (subjKey: string, topicId: string, updates: Partial<NeetTopic>) => {
-    setHistoryStack((prev) => [...prev.slice(-15), JSON.parse(JSON.stringify(subjects))]);
-    const updated = subjects.map((subj) => {
+    setHistoryStack((prev: NeetSubject[][]) => [...prev.slice(-15), JSON.parse(JSON.stringify(subjects))]);
+    const updated = subjects.map((subj: NeetSubject) => {
       if (subj.key !== subjKey) return subj;
       return {
         ...subj,
-        topics: subj.topics.map((t) => (t.id === topicId ? { ...t, ...updates } : t)),
+        topics: subj.topics.map((t: NeetTopic) => (t.id === topicId ? { ...t, ...updates } : t)),
       };
     });
     setSubjects(updated);
@@ -82,7 +82,7 @@ export default function NeetDashboard() {
   const handleUndo = () => {
     if (historyStack.length === 0) return;
     const prev = historyStack[historyStack.length - 1];
-    setHistoryStack((p) => p.slice(0, -1));
+    setHistoryStack((p: NeetSubject[][]) => p.slice(0, -1));
     setSubjects(prev);
     localStorage.setItem("shekhu_neet_syllabus", JSON.stringify(prev));
   };
@@ -95,8 +95,8 @@ export default function NeetDashboard() {
 
   let totalTopics = 0;
   let totalMastered = 0;
-  subjects.forEach((s) => {
-    s.topics.forEach((t) => {
+  subjects.forEach((s: NeetSubject) => {
+    s.topics.forEach((t: NeetTopic) => {
       totalTopics++;
       if (t.status === 3) totalMastered++;
     });
