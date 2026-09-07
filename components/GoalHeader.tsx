@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Timer, Target, Flame, DownloadCloud, Sparkles } from "lucide-react";
+import { Timer, Target, Flame, DownloadCloud, Sparkles, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface GoalHeaderProps {
@@ -12,6 +12,7 @@ export default function GoalHeader({ overallProgress }: GoalHeaderProps) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallBtn, setShowInstallBtn] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const neetExamDate = new Date("2027-05-02T14:00:00").getTime();
 
@@ -51,45 +52,70 @@ export default function GoalHeader({ overallProgress }: GoalHeaderProps) {
     }
   };
 
+  // Safe cache purge & reload without wiping localStorage progress
+  const handleForceUpdate = async () => {
+    setIsUpdating(true);
+    if ("caches" in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map((c) => caches.delete(c)));
+    }
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const reg of registrations) {
+        await reg.unregister();
+      }
+    }
+    window.location.reload();
+  };
+
   return (
     <header className="border-b-4 border-[#122056] bg-[#5b65dc] p-3 sm:p-6 shadow-[4px_4px_0px_0px_#122056]">
       <div className="max-w-7xl mx-auto flex flex-col gap-4">
-        <div className="flex flex-wrap items-center justify-between gap-2.5">
-          <div className="flex items-center gap-2 max-w-full">
-            <div className="flex items-center border-2 border-[#122056] bg-[#122056] shadow-[2px_2px_0px_0px_#122056] overflow-hidden whitespace-nowrap">
-              <span className="bg-[#eeeffd] text-[#122056] text-[10px] sm:text-xs font-black px-2.5 py-1 tracking-wider flex items-center gap-1">
-                <span>🩺</span> AQUASHEKHAR
-              </span>
-              <span className="text-white text-[9px] sm:text-[11px] font-mono font-bold px-2 py-1">
-                SHEKHUBOSS_v2.0
-              </span>
-            </div>
-            <span className="hidden sm:inline-block bg-[#122056] text-white font-black text-xs px-2.5 py-1 border-2 border-[#122056]">
-              TARGET: AIIMS DEOGHAR
+        
+        {/* Navigation & Header Controls */}
+        <div className="flex items-center justify-between gap-2">
+          {/* Brand Tag */}
+          <div className="flex items-center border-2 border-[#122056] bg-[#122056] shadow-[2px_2px_0px_0px_#122056] overflow-hidden whitespace-nowrap">
+            <span className="bg-[#eeeffd] text-[#122056] text-[10px] sm:text-xs font-black px-2 sm:px-2.5 py-1 tracking-wider flex items-center gap-1">
+              <span>🩺</span> AQUASHEKHAR
+            </span>
+            <span className="text-white text-[9px] sm:text-[11px] font-mono font-bold px-2 py-1">
+              SHEKHUBOSS_v2.0
             </span>
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Install Button (Appears only if not yet installed) */}
             {showInstallBtn && (
               <button
                 onClick={handleInstallClick}
-                className="bg-[#eeeffd] hover:bg-white text-[#122056] text-[10px] sm:text-xs font-black px-2.5 py-1 border-2 border-[#122056] shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1 animate-pulse"
+                className="bg-[#ffe600] text-[#122056] text-[10px] sm:text-xs font-black px-2 py-1 border-2 border-[#122056] shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1 animate-pulse"
               >
-                <DownloadCloud className="w-3.5 h-3.5" /> INSTALL APP
+                <DownloadCloud className="w-3 h-3" /> INSTALL
               </button>
             )}
-            <div className="bg-[#eeeffd] px-2.5 py-1 border-2 border-[#122056] font-bold text-[10px] sm:text-xs shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 whitespace-nowrap">
-              <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-              MOBILE SYNCED
-            </div>
+
+            {/* Clean Tap-to-Update & Synced Indicator */}
+            <button
+              onClick={handleForceUpdate}
+              disabled={isUpdating}
+              title="Tap to sync latest updates"
+              className="bg-[#eeeffd] hover:bg-white active:translate-x-0.5 active:translate-y-0.5 px-2.5 py-1 border-2 border-[#122056] font-black text-[10px] sm:text-xs shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 whitespace-nowrap select-none transition-all"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#10b981] shrink-0"></span>
+              <span className="text-[#122056]">SYNCED</span>
+              <RefreshCw className={`w-3 h-3 text-[#5b65dc] ml-0.5 ${isUpdating ? "animate-spin" : ""}`} />
+            </button>
           </div>
         </div>
 
+        {/* Motivational Banner */}
         <div className="bg-[#122056] text-[#eeeffd] border-2 border-[#122056] px-3 py-1.5 shadow-[2px_2px_0px_0px_#122056] flex items-center gap-2 text-xs font-bold">
           <Sparkles className="w-4 h-4 text-[#5b65dc] shrink-0" />
           <span>&quot;One more revision tonight can change your rank tomorrow.&quot;</span>
         </div>
 
+        {/* Status Dashboard Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
           <div className="bg-white border-2 border-[#122056] p-3 sm:p-4 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-1">
