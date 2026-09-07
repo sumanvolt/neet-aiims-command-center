@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5a623",
+  themeColor: "#5b65dc",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,8 +25,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js');
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js').then((reg) => {
+                    reg.onupdatefound = () => {
+                      const installingWorker = reg.installing;
+                      if (installingWorker) {
+                        installingWorker.onstatechange = () => {
+                          if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            window.location.reload();
+                          }
+                        };
+                      }
+                    };
+                  });
                 });
               }
             `,

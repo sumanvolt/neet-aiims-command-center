@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { PlusCircle, TrendingUp, CheckSquare, Plus, Trash2, Calendar, Check, RotateCcw } from "lucide-react";
+import { PlusCircle, TrendingUp, CheckSquare, Trash2, Calendar, RotateCcw } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 import { NeetSubjectGroup } from "./SyllabusTracker";
 
@@ -15,6 +15,7 @@ export interface PwMockEntry {
   phyMarks: number;
   negativeCount: number;
   date: string;
+  rawDate: string; // ISO string for accurate chronological sorting
 }
 
 export interface UpcomingTarget {
@@ -22,7 +23,7 @@ export interface UpcomingTarget {
   testName: string;
   testDate: string;
   selectedSubtopicIds: string[];
-  completedSubtopicIds: string[]; // Tracks green completed topics for this test
+  completedSubtopicIds: string[];
 }
 
 interface MockLoggerProps {
@@ -40,8 +41,11 @@ export default function PWMockLogger({
   onUndoLastTest,
   canUndoTest,
 }: MockLoggerProps) {
+  const todayISO = new Date().toISOString().slice(0, 10);
+
   const [form, setForm] = useState({
     name: "",
+    testDate: todayISO,
     botany: "",
     zoology: "",
     chem: "",
@@ -49,13 +53,11 @@ export default function PWMockLogger({
     negatives: "",
   });
 
-  // Upcoming Test State
   const [upcomingTargets, setUpcomingTargets] = useState<UpcomingTarget[]>([]);
   const [newTestName, setNewTestName] = useState("");
   const [newTestDate, setNewTestDate] = useState("");
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
 
-  // Dropdown States
   const [chosenSubj, setChosenSubj] = useState<string>("");
   const [chosenChap, setChosenChap] = useState<string>("");
 
@@ -80,7 +82,7 @@ export default function PWMockLogger({
     const newTarget: UpcomingTarget = {
       id: Date.now().toString(),
       testName: newTestName,
-      testDate: newTestDate || new Date().toISOString().slice(0, 10),
+      testDate: newTestDate || todayISO,
       selectedSubtopicIds: selectedSubtopics,
       completedSubtopicIds: [],
     };
@@ -113,7 +115,6 @@ export default function PWMockLogger({
     saveUpcoming(upcomingTargets.filter((t) => t.id !== id));
   };
 
-  // Helper dictionary for full readable subtopic names
   const subtopicMap: Record<string, { name: string; chapter: string }> = {};
   subjects.forEach((s) => {
     s.chapters.forEach((c) => {
@@ -134,6 +135,12 @@ export default function PWMockLogger({
     const p = parseInt(form.phy) || 0;
     const total = b + z + c + p;
 
+    const chosenDateObj = new Date(form.testDate || todayISO);
+    const formattedDate = chosenDateObj.toLocaleDateString("en-IN", {
+      month: "short",
+      day: "numeric",
+    });
+
     onAddTest({
       id: Date.now().toString(),
       name: form.name || "PW Test",
@@ -143,15 +150,29 @@ export default function PWMockLogger({
       chemMarks: c,
       phyMarks: p,
       negativeCount: parseInt(form.negatives) || 0,
-      date: new Date().toLocaleDateString("en-IN", { month: "short", day: "numeric" }),
+      date: formattedDate,
+      rawDate: form.testDate || todayISO,
     });
 
-    setForm({ name: "", botany: "", zoology: "", chem: "", phy: "", negatives: "" });
+    setForm({
+      name: "",
+      testDate: todayISO,
+      botany: "",
+      zoology: "",
+      chem: "",
+      phy: "",
+      negatives: "",
+    });
   };
+
+  // Sort tests chronologically by rawDate
+  const sortedTests = [...tests].sort((a, b) => {
+    if (!a.rawDate || !b.rawDate) return 0;
+    return new Date(a.rawDate).getTime() - new Date(b.rawDate).getTime();
+  });
 
   return (
     <div className="space-y-6">
-      {/* Upper Grid: Logger Form and Connected Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Mock Test Entry */}
         <div className="bg-white border-2 border-[#122056] p-5 shadow-[4px_4px_0px_0px_#122056]">
@@ -182,6 +203,20 @@ export default function PWMockLogger({
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full border-2 border-[#122056] p-2 font-mono"
+              />
+            </div>
+
+            {/* Previous Date Picker */}
+            <div>
+              <label className="font-bold block mb-1 text-[#122056] flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-[#5b65dc]" /> TEST DATE (PAST OR TODAY)
+              </label>
+              <input
+                type="date"
+                required
+                value={form.testDate}
+                onChange={(e) => setForm({ ...form, testDate: e.target.value })}
+                className="w-full border-2 border-[#122056] p-1.5 font-mono bg-white"
               />
             </div>
 
@@ -251,7 +286,7 @@ export default function PWMockLogger({
           </form>
         </div>
 
-        {/* Connected Graph Visualization */}
+        {/* Clean Point-to-Point Chart */}
         <div className="lg:col-span-2 bg-white border-2 border-[#122056] p-5 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4 border-b-2 border-[#122056] pb-2">
             <span className="text-xs font-black uppercase flex items-center gap-1.5 text-[#122056]">
@@ -262,14 +297,17 @@ export default function PWMockLogger({
             </span>
           </div>
 
-          <div className="h-60 w-full">
-            {tests.length === 0 ? (
+          <div className="h-64 w-full">
+            {sortedTests.length === 0 ? (
               <div className="h-full flex items-center justify-center text-slate-400 text-xs font-mono">
                 Log his PW weekly tests to map connected trajectory points.
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={tests} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
+                <LineChart
+                  data={sortedTests}
+                  margin={{ top: 10, right: 20, left: -20, bottom: 0 }}
+                >
                   <XAxis dataKey="date" stroke="#122056" tick={{ fontSize: 10 }} />
                   <YAxis domain={[0, 720]} stroke="#122056" tick={{ fontSize: 10 }} />
                   <Tooltip
@@ -290,14 +328,21 @@ export default function PWMockLogger({
                       return null;
                     }}
                   />
-                  <ReferenceLine y={680} stroke="#ff4757" strokeDasharray="3 3" strokeWidth={2} label="AIIMS (680)" />
+                  <ReferenceLine
+                    y={680}
+                    stroke="#ff4757"
+                    strokeDasharray="3 3"
+                    strokeWidth={2}
+                    label="AIIMS (680)"
+                  />
                   <Line
                     type="linear"
                     dataKey="score"
                     stroke="#5b65dc"
                     strokeWidth={3}
-                    dot={{ fill: "#10b981", r: 6, stroke: "#122056", strokeWidth: 2 }}
-                    activeDot={{ r: 8, stroke: "#122056", strokeWidth: 2, fill: "#ff4757" }}
+                    dot={{ fill: "#10b981", r: 5, stroke: "#122056", strokeWidth: 2 }}
+                    activeDot={{ r: 7, stroke: "#122056", strokeWidth: 2, fill: "#ff4757" }}
+                    isAnimationActive={false}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -305,13 +350,13 @@ export default function PWMockLogger({
           </div>
 
           <div className="flex justify-between items-center text-[10px] font-bold text-slate-600 mt-2 border-t border-[#122056]/15 pt-2">
-            <span>Points connect automatically as tests are saved</span>
-            <span className="text-[#10b981] font-black">AIIMS Cutoff Threshold: 680+</span>
+            <span>Points connect chronologically</span>
+            <span className="text-[#10b981] font-black">Target Threshold: 680+ Marks</span>
           </div>
         </div>
       </div>
 
-      {/* Lower Section: UPCOMING TEST PREPARATION SCOPE & TO-DO PLANNER */}
+      {/* Upcoming Test Scope Planner */}
       <div className="bg-white border-2 border-[#122056] p-5 shadow-[4px_4px_0px_0px_#122056] space-y-4">
         <div className="flex items-center justify-between border-b-2 border-[#122056] pb-2">
           <span className="text-xs sm:text-sm font-black uppercase text-[#122056] flex items-center gap-2">
@@ -322,7 +367,6 @@ export default function PWMockLogger({
           </span>
         </div>
 
-        {/* Builder Toolbar */}
         <form onSubmit={handleAddUpcoming} className="bg-[#fafafd] border-2 border-[#122056] p-3 space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
@@ -346,7 +390,6 @@ export default function PWMockLogger({
             </div>
           </div>
 
-          {/* Subtopic Cascader */}
           <div className="space-y-2">
             <label className="font-black text-xs text-[#122056] block">
               SELECT COMING CHAPTERS / SUBTOPICS ({selectedSubtopics.length} Selected):
@@ -385,7 +428,6 @@ export default function PWMockLogger({
               </select>
             </div>
 
-            {/* Subtopic Selection Checklist */}
             {chosenChap && (
               <div className="max-h-44 overflow-y-auto border-2 border-[#122056] p-2 bg-white space-y-1.5 text-xs">
                 {subjects
@@ -418,7 +460,6 @@ export default function PWMockLogger({
           </button>
         </form>
 
-        {/* Rendered Upcoming Prep Cards */}
         <div className="space-y-4 pt-2">
           {upcomingTargets.length === 0 ? (
             <div className="text-center text-xs font-mono text-slate-400 py-3">
@@ -459,7 +500,6 @@ export default function PWMockLogger({
                     </div>
                   </div>
 
-                  {/* Checklist of Subtopics with Toggleable Green Completion */}
                   <div className="space-y-1.5 text-xs">
                     {target.selectedSubtopicIds.map((stId) => {
                       const isDone = (target.completedSubtopicIds || []).includes(stId);

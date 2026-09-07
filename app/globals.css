@@ -31,3 +31,13 @@ body {
 ::-webkit-scrollbar-track {
   background: #eeeffd;
 }
+
+/* Remove Recharts mobile tap outline/focus box */
+.recharts-wrapper,
+.recharts-wrapper *,
+.recharts-surface,
+.recharts-surface * {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+}

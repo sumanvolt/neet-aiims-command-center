@@ -1,13 +1,13 @@
 {
-  "name": "NEET 2027 // SHEKHUBOSS",
+  "name": "NEET 2027 // AQUASHEKHAR",
   "short_name": "NEET AIIMS",
-  "description": "Mission 680+ AIIMS Deoghar Command Center",
+  "description": "Mission AIIMS Deoghar Command Center",
   "start_url": "/",
   "id": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#2c0d0d",
-  "theme_color": "#f5a623",
+  "background_color": "#122056",
+  "theme_color": "#5b65dc",
   "orientation": "portrait",
   "icons": [
     {
