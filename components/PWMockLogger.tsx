@@ -15,7 +15,7 @@ export interface PwMockEntry {
   phyMarks: number;
   negativeCount: number;
   date: string;
-  rawDate: string; // ISO string for accurate chronological sorting
+  rawDate: string;
 }
 
 export interface UpcomingTarget {
@@ -99,7 +99,11 @@ export default function PWMockLogger({
     );
   };
 
-  const toggleTargetTopicComplete = (targetId: string, subtopicId: string) => {
+  const toggleTargetTopicComplete = (targetId: string, subtopicId: string, e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const updated = upcomingTargets.map((target) => {
       if (target.id !== targetId) return target;
       const completed = target.completedSubtopicIds || [];
@@ -111,7 +115,10 @@ export default function PWMockLogger({
     saveUpcoming(updated);
   };
 
-  const handleDeleteTarget = (id: string) => {
+  const handleDeleteTarget = (id: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     saveUpcoming(upcomingTargets.filter((t) => t.id !== id));
   };
 
@@ -165,7 +172,6 @@ export default function PWMockLogger({
     });
   };
 
-  // Sort tests chronologically by rawDate
   const sortedTests = [...tests].sort((a, b) => {
     if (!a.rawDate || !b.rawDate) return 0;
     return new Date(a.rawDate).getTime() - new Date(b.rawDate).getTime();
@@ -206,7 +212,6 @@ export default function PWMockLogger({
               />
             </div>
 
-            {/* Previous Date Picker */}
             <div>
               <label className="font-bold block mb-1 text-[#122056] flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5 text-[#5b65dc]" /> TEST DATE (PAST OR TODAY)
@@ -286,7 +291,7 @@ export default function PWMockLogger({
           </form>
         </div>
 
-        {/* Clean Point-to-Point Chart */}
+        {/* Chart View */}
         <div className="lg:col-span-2 bg-white border-2 border-[#122056] p-5 shadow-[4px_4px_0px_0px_#122056] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4 border-b-2 border-[#122056] pb-2">
             <span className="text-xs font-black uppercase flex items-center gap-1.5 text-[#122056]">
@@ -363,7 +368,7 @@ export default function PWMockLogger({
             <CheckSquare className="w-4 h-4 text-[#5b65dc]" /> UPCOMING TEST SYLLABUS &amp; TARGET PLANNER
           </span>
           <span className="text-[10px] bg-[#eeeffd] border border-[#122056] px-2 py-0.5 font-bold text-[#122056]">
-            CLICK TOPICS TO MARK GREEN WHEN READY
+            TAP SUBTOPIC TO TOGGLE READY
           </span>
         </div>
 
@@ -436,7 +441,7 @@ export default function PWMockLogger({
                   ?.subtopics.map((st) => (
                     <label
                       key={st.id}
-                      className="flex items-center gap-2 p-1.5 hover:bg-[#eeeffd] cursor-pointer border border-[#122056]/15"
+                      className="flex items-center gap-2 p-1.5 hover:bg-[#eeeffd] cursor-pointer border border-[#122056]/15 select-none"
                     >
                       <input
                         type="checkbox"
@@ -491,8 +496,9 @@ export default function PWMockLogger({
                         {completedCount}/{totalCount} READY ({pct}%)
                       </span>
                       <button
-                        onClick={() => handleDeleteTarget(target.id)}
-                        className="p-1 text-[#ff4757] hover:bg-rose-50 border border-[#ff4757]"
+                        type="button"
+                        onClick={(e) => handleDeleteTarget(target.id, e)}
+                        className="p-1 text-[#ff4757] hover:bg-rose-50 border border-[#ff4757] active:scale-95"
                         title="Delete Target"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -500,35 +506,38 @@ export default function PWMockLogger({
                     </div>
                   </div>
 
-                  <div className="space-y-1.5 text-xs">
+                  {/* Explicit Mobile Touch Accessible Action Buttons */}
+                  <div className="space-y-2 text-xs">
                     {target.selectedSubtopicIds.map((stId) => {
                       const isDone = (target.completedSubtopicIds || []).includes(stId);
                       const topicInfo = subtopicMap[stId];
 
                       return (
-                        <div
+                        <button
                           key={stId}
-                          onClick={() => toggleTargetTopicComplete(target.id, stId)}
-                          className={`flex items-center justify-between p-2 border-2 border-[#122056] cursor-pointer transition-all ${
+                          type="button"
+                          onClick={(e) => toggleTargetTopicComplete(target.id, stId, e)}
+                          className={`w-full text-left flex items-center justify-between p-2.5 border-2 border-[#122056] transition-all select-none active:scale-[0.99] touch-manipulation ${
                             isDone
                               ? "bg-[#10b981] text-white shadow-[1px_1px_0px_0px_#122056]"
                               : "bg-[#fafafd] text-[#122056] hover:bg-[#eeeffd]"
                           }`}
+                          style={{ WebkitTapHighlightColor: "transparent" }}
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2.5 pointer-events-none flex-1 pr-2">
                             <div
-                              className={`w-4 h-4 border-2 border-[#122056] flex items-center justify-center font-black text-[10px] ${
+                              className={`w-4 h-4 shrink-0 border-2 border-[#122056] flex items-center justify-center font-black text-[10px] ${
                                 isDone ? "bg-white text-[#10b981]" : "bg-white text-transparent"
                               }`}
                             >
                               ✓
                             </div>
-                            <div>
-                              <span className={`font-bold ${isDone ? "line-through opacity-90" : ""}`}>
+                            <div className="flex flex-col text-left">
+                              <span className={`font-bold text-xs ${isDone ? "line-through opacity-90" : ""}`}>
                                 {topicInfo?.name || stId}
                               </span>
                               {topicInfo?.chapter && (
-                                <span className={`block text-[9px] font-mono ${isDone ? "text-emerald-100" : "text-slate-500"}`}>
+                                <span className={`text-[9px] font-mono ${isDone ? "text-emerald-100" : "text-slate-500"}`}>
                                   {topicInfo.chapter}
                                 </span>
                               )}
@@ -536,7 +545,7 @@ export default function PWMockLogger({
                           </div>
 
                           <span
-                            className={`text-[9px] font-black px-2 py-0.5 border border-[#122056] whitespace-nowrap ${
+                            className={`pointer-events-none text-[9px] font-black px-2 py-0.5 border border-[#122056] whitespace-nowrap shrink-0 ${
                               isDone
                                 ? "bg-white text-[#10b981]"
                                 : "bg-[#eeeffd] text-[#122056]"
@@ -544,7 +553,7 @@ export default function PWMockLogger({
                           >
                             {isDone ? "COMPLETED ✓" : "MARK READY"}
                           </span>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>

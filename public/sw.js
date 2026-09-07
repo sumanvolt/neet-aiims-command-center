@@ -1,4 +1,4 @@
-const CACHE_NAME = "neet-shekhuboss-v4";
+const CACHE_NAME = "neet-shekhuboss-v5";
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
