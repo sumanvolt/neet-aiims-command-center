@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { PlusCircle, TrendingUp, CheckSquare, Plus, Trash2, Calendar } from "lucide-react";
+import { PlusCircle, TrendingUp, CheckSquare, Plus, Trash2, Calendar, Check, RotateCcw } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 import { NeetSubjectGroup } from "./SyllabusTracker";
 
@@ -22,15 +22,24 @@ export interface UpcomingTarget {
   testName: string;
   testDate: string;
   selectedSubtopicIds: string[];
+  completedSubtopicIds: string[]; // Tracks green completed topics for this test
 }
 
 interface MockLoggerProps {
   tests: PwMockEntry[];
   onAddTest: (entry: PwMockEntry) => void;
   subjects: NeetSubjectGroup[];
+  onUndoLastTest?: () => void;
+  canUndoTest?: boolean;
 }
 
-export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerProps) {
+export default function PWMockLogger({
+  tests,
+  onAddTest,
+  subjects,
+  onUndoLastTest,
+  canUndoTest,
+}: MockLoggerProps) {
   const [form, setForm] = useState({
     name: "",
     botany: "",
@@ -46,20 +55,22 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
   const [newTestDate, setNewTestDate] = useState("");
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
 
-  // Selection Dropdown Helper States
+  // Dropdown States
   const [chosenSubj, setChosenSubj] = useState<string>("");
   const [chosenChap, setChosenChap] = useState<string>("");
 
   useEffect(() => {
-    const saved = localStorage.getItem("shekhu_upcoming_prep_targets");
+    const saved = localStorage.getItem("shekhu_upcoming_prep_targets_v2");
     if (saved) {
-      try { setUpcomingTargets(JSON.parse(saved)); } catch (e) {}
+      try {
+        setUpcomingTargets(JSON.parse(saved));
+      } catch (e) {}
     }
   }, []);
 
   const saveUpcoming = (targets: UpcomingTarget[]) => {
     setUpcomingTargets(targets);
-    localStorage.setItem("shekhu_upcoming_prep_targets", JSON.stringify(targets));
+    localStorage.setItem("shekhu_upcoming_prep_targets_v2", JSON.stringify(targets));
   };
 
   const handleAddUpcoming = (e: React.FormEvent) => {
@@ -71,6 +82,7 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
       testName: newTestName,
       testDate: newTestDate || new Date().toISOString().slice(0, 10),
       selectedSubtopicIds: selectedSubtopics,
+      completedSubtopicIds: [],
     };
 
     saveUpcoming([...upcomingTargets, newTarget]);
@@ -85,16 +97,31 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
     );
   };
 
+  const toggleTargetTopicComplete = (targetId: string, subtopicId: string) => {
+    const updated = upcomingTargets.map((target) => {
+      if (target.id !== targetId) return target;
+      const completed = target.completedSubtopicIds || [];
+      const nextCompleted = completed.includes(subtopicId)
+        ? completed.filter((id) => id !== subtopicId)
+        : [...completed, subtopicId];
+      return { ...target, completedSubtopicIds: nextCompleted };
+    });
+    saveUpcoming(updated);
+  };
+
   const handleDeleteTarget = (id: string) => {
     saveUpcoming(upcomingTargets.filter((t) => t.id !== id));
   };
 
-  // Helper map for subtopic names
-  const subtopicMap: Record<string, string> = {};
+  // Helper dictionary for full readable subtopic names
+  const subtopicMap: Record<string, { name: string; chapter: string }> = {};
   subjects.forEach((s) => {
     s.chapters.forEach((c) => {
       c.subtopics.forEach((st) => {
-        subtopicMap[st.id] = `${c.title.split(":")[1] || c.title} ➔ ${st.name}`;
+        subtopicMap[st.id] = {
+          name: st.name,
+          chapter: c.title.split(":")[1]?.trim() || c.title,
+        };
       });
     });
   });
@@ -128,9 +155,22 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Mock Test Entry */}
         <div className="bg-white border-2 border-[#122056] p-5 shadow-[4px_4px_0px_0px_#122056]">
-          <div className="flex items-center gap-2 mb-4 border-b-2 border-[#122056] pb-2">
-            <PlusCircle className="w-5 h-5 text-[#ff4757]" />
-            <h3 className="font-black text-xs uppercase tracking-wider text-[#122056]">LOG PW / NEET MOCK TEST</h3>
+          <div className="flex items-center justify-between mb-4 border-b-2 border-[#122056] pb-2">
+            <div className="flex items-center gap-2">
+              <PlusCircle className="w-5 h-5 text-[#ff4757]" />
+              <h3 className="font-black text-xs uppercase tracking-wider text-[#122056]">
+                LOG PW / NEET MOCK TEST
+              </h3>
+            </div>
+            {canUndoTest && onUndoLastTest && (
+              <button
+                type="button"
+                onClick={onUndoLastTest}
+                className="px-2 py-1 text-[10px] font-black bg-[#ff4757] text-white border border-[#122056] flex items-center gap-1 hover:bg-rose-600 shadow-[1px_1px_0px_0px_#122056]"
+              >
+                <RotateCcw className="w-3 h-3" /> UNDO TEST
+              </button>
+            )}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3 text-xs">
@@ -278,7 +318,7 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
             <CheckSquare className="w-4 h-4 text-[#5b65dc]" /> UPCOMING TEST SYLLABUS &amp; TARGET PLANNER
           </span>
           <span className="text-[10px] bg-[#eeeffd] border border-[#122056] px-2 py-0.5 font-bold text-[#122056]">
-            FOCUSED REVISION SCOPE
+            CLICK TOPICS TO MARK GREEN WHEN READY
           </span>
         </div>
 
@@ -306,7 +346,7 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
             </div>
           </div>
 
-          {/* Subtopic Picker Cascader */}
+          {/* Subtopic Cascader */}
           <div className="space-y-2">
             <label className="font-black text-xs text-[#122056] block">
               SELECT COMING CHAPTERS / SUBTOPICS ({selectedSubtopics.length} Selected):
@@ -322,7 +362,9 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
               >
                 <option value="">-- Choose Subject --</option>
                 {subjects.map((s) => (
-                  <option key={s.key} value={s.key}>{s.title}</option>
+                  <option key={s.key} value={s.key}>
+                    {s.title}
+                  </option>
                 ))}
               </select>
 
@@ -336,12 +378,14 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
                 {subjects
                   .find((s) => s.key === chosenSubj)
                   ?.chapters.map((c) => (
-                    <option key={c.id} value={c.id}>{c.title}</option>
+                    <option key={c.id} value={c.id}>
+                      {c.title}
+                    </option>
                   ))}
               </select>
             </div>
 
-            {/* Subtopic Checklist for Selected Chapter */}
+            {/* Subtopic Selection Checklist */}
             {chosenChap && (
               <div className="max-h-44 overflow-y-auto border-2 border-[#122056] p-2 bg-white space-y-1.5 text-xs">
                 {subjects
@@ -375,45 +419,98 @@ export default function PWMockLogger({ tests, onAddTest, subjects }: MockLoggerP
         </form>
 
         {/* Rendered Upcoming Prep Cards */}
-        <div className="space-y-3 pt-2">
+        <div className="space-y-4 pt-2">
           {upcomingTargets.length === 0 ? (
             <div className="text-center text-xs font-mono text-slate-400 py-3">
               No upcoming test targets created. Choose topics above to build his test checklist.
             </div>
           ) : (
-            upcomingTargets.map((target) => (
-              <div key={target.id} className="border-2 border-[#122056] bg-[#eeeffd] p-3 shadow-[2px_2px_0px_0px_#122056]">
-                <div className="flex items-center justify-between border-b border-[#122056]/20 pb-2 mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-xs sm:text-sm text-[#122056]">{target.testName}</span>
-                    <span className="bg-[#122056] text-white text-[9px] font-bold px-1.5 py-0.2 flex items-center gap-1">
-                      <Calendar className="w-2.5 h-2.5" /> {target.testDate}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => handleDeleteTarget(target.id)}
-                    className="p-1 text-[#ff4757] hover:bg-rose-100 border border-[#ff4757]"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+            upcomingTargets.map((target) => {
+              const completedCount = (target.completedSubtopicIds || []).length;
+              const totalCount = target.selectedSubtopicIds.length;
+              const pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-                {/* Checklist of Subtopics */}
-                <div className="space-y-1 text-xs">
-                  {target.selectedSubtopicIds.map((stId) => (
-                    <div
-                      key={stId}
-                      className="flex items-center justify-between p-1.5 bg-white border border-[#122056]/20"
-                    >
-                      <span className="font-bold text-[#122056]">{subtopicMap[stId] || stId}</span>
-                      <span className="text-[10px] bg-[#5b65dc] text-white px-1.5 py-0.2 font-black">
-                        SCOPE ITEM
+              return (
+                <div
+                  key={target.id}
+                  className="border-2 border-[#122056] bg-white p-4 shadow-[3px_3px_0px_0px_#122056] space-y-3"
+                >
+                  <div className="flex flex-wrap items-center justify-between border-b border-[#122056]/20 pb-2 gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-xs sm:text-sm text-[#122056]">
+                        {target.testName}
+                      </span>
+                      <span className="bg-[#122056] text-white text-[9px] font-bold px-1.5 py-0.5 flex items-center gap-1">
+                        <Calendar className="w-2.5 h-2.5" /> {target.testDate}
                       </span>
                     </div>
-                  ))}
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-bold font-mono text-[#122056] bg-[#eeeffd] px-2 py-0.5 border border-[#122056]">
+                        {completedCount}/{totalCount} READY ({pct}%)
+                      </span>
+                      <button
+                        onClick={() => handleDeleteTarget(target.id)}
+                        className="p-1 text-[#ff4757] hover:bg-rose-50 border border-[#ff4757]"
+                        title="Delete Target"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Checklist of Subtopics with Toggleable Green Completion */}
+                  <div className="space-y-1.5 text-xs">
+                    {target.selectedSubtopicIds.map((stId) => {
+                      const isDone = (target.completedSubtopicIds || []).includes(stId);
+                      const topicInfo = subtopicMap[stId];
+
+                      return (
+                        <div
+                          key={stId}
+                          onClick={() => toggleTargetTopicComplete(target.id, stId)}
+                          className={`flex items-center justify-between p-2 border-2 border-[#122056] cursor-pointer transition-all ${
+                            isDone
+                              ? "bg-[#10b981] text-white shadow-[1px_1px_0px_0px_#122056]"
+                              : "bg-[#fafafd] text-[#122056] hover:bg-[#eeeffd]"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`w-4 h-4 border-2 border-[#122056] flex items-center justify-center font-black text-[10px] ${
+                                isDone ? "bg-white text-[#10b981]" : "bg-white text-transparent"
+                              }`}
+                            >
+                              ✓
+                            </div>
+                            <div>
+                              <span className={`font-bold ${isDone ? "line-through opacity-90" : ""}`}>
+                                {topicInfo?.name || stId}
+                              </span>
+                              {topicInfo?.chapter && (
+                                <span className={`block text-[9px] font-mono ${isDone ? "text-emerald-100" : "text-slate-500"}`}>
+                                  {topicInfo.chapter}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <span
+                            className={`text-[9px] font-black px-2 py-0.5 border border-[#122056] whitespace-nowrap ${
+                              isDone
+                                ? "bg-white text-[#10b981]"
+                                : "bg-[#eeeffd] text-[#122056]"
+                            }`}
+                          >
+                            {isDone ? "COMPLETED ✓" : "MARK READY"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </div>

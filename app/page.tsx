@@ -5,6 +5,7 @@ import GoalHeader from "@/components/GoalHeader";
 import DailyTracker from "@/components/DailyTracker";
 import SyllabusTracker, { NeetSubjectGroup, NeetSubTopic } from "@/components/SyllabusTracker";
 import PWMockLogger, { PwMockEntry } from "@/components/PWMockLogger";
+import { RotateCcw } from "lucide-react";
 
 const OFFICIAL_NEET_SYLLABUS: NeetSubjectGroup[] = [
   {
@@ -425,16 +426,19 @@ export default function NeetDashboard() {
   const [subjects, setSubjects] = useState<NeetSubjectGroup[]>(OFFICIAL_NEET_SYLLABUS);
   const [pwTests, setPwTests] = useState<PwMockEntry[]>([]);
   const [activeTab, setActiveTab] = useState<"habits" | "syllabus" | "pwMocks">("habits");
-  const [historyStack, setHistoryStack] = useState<NeetSubjectGroup[][]>([]);
+
+  // Multi-tier undo history stacks
+  const [syllabusHistory, setSyllabusHistory] = useState<NeetSubjectGroup[][]>([]);
+  const [mockHistory, setMockHistory] = useState<PwMockEntry[][]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("shekhu_neet_official_syllabus_v4");
+    const saved = localStorage.getItem("shekhu_neet_official_syllabus_v5");
     if (saved) {
       try {
         setSubjects(JSON.parse(saved));
       } catch (e) {}
     }
-    const savedMocks = localStorage.getItem("shekhu_pw_tests_v3");
+    const savedMocks = localStorage.getItem("shekhu_pw_tests_v4");
     if (savedMocks) {
       try {
         setPwTests(JSON.parse(savedMocks));
@@ -448,7 +452,8 @@ export default function NeetDashboard() {
     subtopicId: string,
     updates: Partial<NeetSubTopic>
   ) => {
-    setHistoryStack((prev) => [...prev.slice(-15), JSON.parse(JSON.stringify(subjects))]);
+    // Snapshot current state for undo
+    setSyllabusHistory((prev) => [...prev.slice(-20), JSON.parse(JSON.stringify(subjects))]);
 
     const updated = subjects.map((subj) => {
       if (subj.key !== subjKey) return subj;
@@ -467,72 +472,118 @@ export default function NeetDashboard() {
     });
 
     setSubjects(updated);
-    localStorage.setItem("shekhu_neet_official_syllabus_v4", JSON.stringify(updated));
+    localStorage.setItem("shekhu_neet_official_syllabus_v5", JSON.stringify(updated));
   };
 
-  const handleUndo = () => {
-    if (historyStack.length === 0) return;
-    const prev = historyStack[historyStack.length - 1];
-    setHistoryStack((p) => p.slice(0, -1));
+  const handleUndoSubtopic = () => {
+    if (syllabusHistory.length === 0) return;
+    const prev = syllabusHistory[syllabusHistory.length - 1];
+    setSyllabusHistory((p) => p.slice(0, -1));
     setSubjects(prev);
-    localStorage.setItem("shekhu_neet_official_syllabus_v4", JSON.stringify(prev));
+    localStorage.setItem("shekhu_neet_official_syllabus_v5", JSON.stringify(prev));
   };
 
   const handleAddTest = (entry: PwMockEntry) => {
+    setMockHistory((prev) => [...prev.slice(-10), JSON.parse(JSON.stringify(pwTests))]);
     const updated = [...pwTests, entry];
     setPwTests(updated);
-    localStorage.setItem("shekhu_pw_tests_v3", JSON.stringify(updated));
+    localStorage.setItem("shekhu_pw_tests_v4", JSON.stringify(updated));
   };
 
-  let totalSubtopics = 0;
-  let masteredSubtopics = 0;
+  const handleUndoMock = () => {
+    if (mockHistory.length === 0) return;
+    const prev = mockHistory[mockHistory.length - 1];
+    setMockHistory((p) => p.slice(0, -1));
+    setPwTests(prev);
+    localStorage.setItem("shekhu_pw_tests_v4", JSON.stringify(prev));
+  };
+
+  // ----------------------------------------------------
+  // WEIGHTED READINESS FORMULA (Guarantees immediate bar movement):
+  // Status (0..3) = up to 50 points
+  // NCERT Read    = 25 points
+  // DPP Solved    = 25 points
+  // Total points earned / total possible points * 100
+  // ----------------------------------------------------
+  let earnedScore = 0;
+  let maxPossibleScore = 0;
+
   subjects.forEach((s) => {
     s.chapters.forEach((c) => {
       c.subtopics.forEach((st) => {
-        totalSubtopics++;
-        if (st.status === 3) masteredSubtopics++;
+        maxPossibleScore += 100;
+
+        // Status component: 0 = 0, 1 = 16.6, 2 = 33.3, 3 = 50
+        const statusPoints = (st.status / 3) * 50;
+        const ncertPoints = st.ncertDone ? 25 : 0;
+        const dppPoints = st.dppDone ? 25 : 0;
+
+        earnedScore += statusPoints + ncertPoints + dppPoints;
       });
     });
   });
+
   const overallProgress =
-    totalSubtopics > 0 ? Math.round((masteredSubtopics / totalSubtopics) * 100) : 0;
+    maxPossibleScore > 0 ? Math.round((earnedScore / maxPossibleScore) * 100) : 0;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fafafd]">
       <GoalHeader overallProgress={overallProgress} />
 
       <main className="max-w-7xl mx-auto w-full p-3 sm:p-6 flex-1 space-y-6">
-        <div className="flex border-b-4 border-[#122056] gap-2">
-          <button
-            onClick={() => setActiveTab("habits")}
-            className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "habits"
-                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
-                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
-            }`}
-          >
-            📅 MONTHLY HABIT GRID (6H / 30M WALK)
-          </button>
-          <button
-            onClick={() => setActiveTab("syllabus")}
-            className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "syllabus"
-                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
-                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
-            }`}
-          >
-            🩺 FULL NEET SYLLABUS &amp; SUBTOPICS
-          </button>
-          <button
-            onClick={() => setActiveTab("pwMocks")}
-            className={`px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
-              activeTab === "pwMocks"
-                ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
-                : "bg-[#eeeffd] text-[#122056] hover:bg-white"
-            }`}
-          >
-            PW TEST RADAR &amp; UPCOMING TARGETS
-          </button>
+        {/* Navigation Ribbon with Quick Undo */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b-4 border-[#122056] pb-2 gap-2">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveTab("habits")}
+              className={`px-3 sm:px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
+                activeTab === "habits"
+                  ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                  : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              }`}
+            >
+              📅 HABIT GRID
+            </button>
+            <button
+              onClick={() => setActiveTab("syllabus")}
+              className={`px-3 sm:px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
+                activeTab === "syllabus"
+                  ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                  : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              }`}
+            >
+              🩺 NEET SYLLABUS &amp; DPPS
+            </button>
+            <button
+              onClick={() => setActiveTab("pwMocks")}
+              className={`px-3 sm:px-4 py-2 text-xs font-black border-2 border-[#122056] transition-all ${
+                activeTab === "pwMocks"
+                  ? "bg-white text-[#122056] shadow-[2px_2px_0px_0px_#122056]"
+                  : "bg-[#eeeffd] text-[#122056] hover:bg-white"
+              }`}
+            >
+              PW RADAR &amp; UPCOMING TARGETS
+            </button>
+          </div>
+
+          {/* Contextual Global Undo Button */}
+          {activeTab === "syllabus" && syllabusHistory.length > 0 && (
+            <button
+              onClick={handleUndoSubtopic}
+              className="px-3 py-1.5 text-xs font-black bg-[#ff4757] text-white border-2 border-[#122056] shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 hover:bg-rose-600 active:translate-x-0.5 active:translate-y-0.5 self-start sm:self-auto"
+            >
+              <RotateCcw className="w-3.5 h-3.5" /> UNDO SYLLABUS TICK
+            </button>
+          )}
+
+          {activeTab === "pwMocks" && mockHistory.length > 0 && (
+            <button
+              onClick={handleUndoMock}
+              className="px-3 py-1.5 text-xs font-black bg-[#ff4757] text-white border-2 border-[#122056] shadow-[2px_2px_0px_0px_#122056] flex items-center gap-1.5 hover:bg-rose-600 active:translate-x-0.5 active:translate-y-0.5 self-start sm:self-auto"
+            >
+              <RotateCcw className="w-3.5 h-3.5" /> UNDO LAST TEST
+            </button>
+          )}
         </div>
 
         {activeTab === "habits" && <DailyTracker />}
@@ -541,13 +592,19 @@ export default function NeetDashboard() {
           <SyllabusTracker
             subjects={subjects}
             onUpdateSubtopic={handleUpdateSubtopic}
-            onUndo={handleUndo}
-            canUndo={historyStack.length > 0}
+            onUndo={handleUndoSubtopic}
+            canUndo={syllabusHistory.length > 0}
           />
         )}
 
         {activeTab === "pwMocks" && (
-          <PWMockLogger tests={pwTests} onAddTest={handleAddTest} subjects={subjects} />
+          <PWMockLogger
+            tests={pwTests}
+            onAddTest={handleAddTest}
+            subjects={subjects}
+            onUndoLastTest={handleUndoMock}
+            canUndoTest={mockHistory.length > 0}
+          />
         )}
       </main>
 
